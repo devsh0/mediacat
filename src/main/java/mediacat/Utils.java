@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class Utils {
     @SuppressWarnings("ConstantConditions")
-    public static byte[] get (String url) throws IOException {
+    public static byte[] get(String url) throws IOException {
         Request request = new Request.Builder().url(url).build();
         Response response = AppContext.HTTP_CLIENT.newCall(request).execute();
 
@@ -17,6 +17,8 @@ public class Utils {
         if (!response.isSuccessful())
             throw new RuntimeException("bad response received");
 
-        return response.body().bytes();
+        byte[] body = response.body().bytes();
+        response.body().close();
+        return body;
     }
 }

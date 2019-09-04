@@ -15,6 +15,26 @@ public class TorrentMeta {
         this.leech = leech;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public long getSizeInBytes() {
+        return sizeInBytes;
+    }
+
+    public int getAgeInDays() {
+        return ageInDays;
+    }
+
+    public int getSeed() {
+        return seed;
+    }
+
+    public int getLeech() {
+        return leech;
+    }
+
     @Override
     public String toString () {
         return "[" +

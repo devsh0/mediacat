@@ -2,11 +2,10 @@ package mediacat;
 
 import okhttp3.OkHttpClient;
 
-import java.io.IOException;
 import java.time.Duration;
 
 public class AppContext {
-    // todo: load from configs
+    // todo: load this from configs
     private static final long CALL_TIMEOUT = 10000;
 
     public static final OkHttpClient HTTP_CLIENT = new OkHttpClient.Builder()

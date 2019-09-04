@@ -7,19 +7,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class KickassTorrentsTest {
-
-    @org.junit.jupiter.api.BeforeEach
-    void setUp() {
-    }
-
-    @org.junit.jupiter.api.AfterEach
-    void tearDown() {
-    }
-
     @Test
     void testEmptyListReturnedWhenTorrentNotFoundForGivenSearchTerm() {
         try {
-            String gibberish = "hfjbassafa";
+            String gibberish = "kfahfjaskd";
             List<TorrentMeta> metas = KickassTorrents.INSTANCE.getTorrentMeta(gibberish);
             assertEquals(0, metas.size());
         } catch (TorrentEngineFailedException exc) {
@@ -33,11 +24,20 @@ class KickassTorrentsTest {
         try {
             String search = "Sacred Games";
             List<TorrentMeta> metas = KickassTorrents.INSTANCE.getTorrentMeta(search);
-            System.out.println("Meta List Length: " + metas.size());
-            for (TorrentMeta meta : metas) {
-                System.out.println(meta);
-            }
             assertTrue(metas.size() > 0);
+        } catch (TorrentEngineFailedException exc) {
+            exc.getCause().printStackTrace();
+            fail("Exception thrown");
+        }
+    }
+
+    @Test
+    void testInvalidUrlCharsCarriedToSearch() {
+        try {
+            String search = "O'Reilly";
+            List<TorrentMeta> metas = KickassTorrents.INSTANCE.getTorrentMeta(search);
+            assertTrue(metas.size() > 0);
+            assertTrue(metas.get(0).getName().contains(search));
         } catch (TorrentEngineFailedException exc) {
             exc.getCause().printStackTrace();
             fail("Exception thrown");

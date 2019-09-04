@@ -13,7 +13,7 @@ class KickassTorrents implements TorrentEngine {
     static final KickassTorrents INSTANCE = new KickassTorrents();
     private static final String BASE_URL = "https://kickasstorrents.to/usearch/";
 
-    private static interface SELECTORS {
+    private interface SELECTORS {
         String DATA_ROWS_ODD = "table.data tr.odd";
         String DATA_ROWS_EVEN = "table.data tr.even";
         String CELL_MAIN_LINK = "a.cellMainLink";
@@ -24,7 +24,7 @@ class KickassTorrents implements TorrentEngine {
         static long parseSize(String sizeStr) {
             String[] pieces = sizeStr.split("\\s");
             double size = Double.parseDouble(pieces[0]);
-            switch (pieces[1]) {
+            switch (pieces[1].toUpperCase()) {
                 case "KB":
                     size *= 1000L;
                     break;
@@ -73,13 +73,13 @@ class KickassTorrents implements TorrentEngine {
         }
     }
 
-    private static String stripName(Element row) {
+    private static String extractName(Element row) {
         Element mainLink = row.selectFirst(SELECTORS.CELL_MAIN_LINK);
         String innerText = mainLink.text().trim();
         return innerText.replaceAll("\\s", ".");
     }
 
-    private static String stripCellData(Element row, int cellPosition) {
+    private static String extractCellData(Element row, int cellPosition) {
         Element cell = row.select(SELECTORS.DATA_CELL).get(cellPosition);
         return cell.text().trim();
     }
@@ -91,11 +91,11 @@ class KickassTorrents implements TorrentEngine {
         rows.addAll(doc.select(SELECTORS.DATA_ROWS_EVEN));
 
         for (Element row : rows) {
-            String name = stripName(row);
-            long size = Parser.parseSize(stripCellData(row, 0));
-            int age = Parser.parseAge(stripCellData(row, 2));
-            int seed = Parser.parseSeed(stripCellData(row, 3));
-            int leech = Parser.parseLeech(stripCellData(row, 4));
+            String name = extractName(row).replace(".", " ");
+            long size = Parser.parseSize(extractCellData(row, 0));
+            int age = Parser.parseAge(extractCellData(row, 2));
+            int seed = Parser.parseSeed(extractCellData(row, 3));
+            int leech = Parser.parseLeech(extractCellData(row, 4));
             metas.add(new TorrentMeta(name, size, age, seed, leech));
         }
 
