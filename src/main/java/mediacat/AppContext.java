@@ -2,6 +2,7 @@ package mediacat;
 
 import okhttp3.OkHttpClient;
 
+import java.io.IOException;
 import java.time.Duration;
 
 public class AppContext {
@@ -11,4 +12,9 @@ public class AppContext {
     public static final OkHttpClient HTTP_CLIENT = new OkHttpClient.Builder()
             .callTimeout(Duration.ofMillis(CALL_TIMEOUT))
             .build();
+
+    public static void cleanup () {
+        HTTP_CLIENT.dispatcher().executorService().shutdownNow();
+        HTTP_CLIENT.connectionPool().evictAll();
+    }
 }

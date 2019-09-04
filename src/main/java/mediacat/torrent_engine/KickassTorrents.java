@@ -24,7 +24,6 @@ class KickassTorrents implements TorrentEngine {
         static long parseSize(String sizeStr) {
             String[] pieces = sizeStr.split("\\s");
             double size = Double.parseDouble(pieces[0]);
-
             switch (pieces[1]) {
                 case "KB":
                     size *= 1000L;
@@ -46,7 +45,6 @@ class KickassTorrents implements TorrentEngine {
         static int parseAge(String ageStr) {
             String[] pieces = ageStr.split("\\s");
             int age = Integer.parseInt(pieces[0]);
-
             switch (pieces[1].toLowerCase()) {
                 case "hour":
                 case "hours":
@@ -88,19 +86,16 @@ class KickassTorrents implements TorrentEngine {
 
     private static List<TorrentMeta> parseHtml(String html) {
         List<TorrentMeta> metas = new ArrayList<>();
-
         Document doc = Jsoup.parse(html);
         List<Element> rows = doc.select(SELECTORS.DATA_ROWS_ODD);
         rows.addAll(doc.select(SELECTORS.DATA_ROWS_EVEN));
 
         for (Element row : rows) {
             String name = stripName(row);
-
             long size = Parser.parseSize(stripCellData(row, 0));
             int age = Parser.parseAge(stripCellData(row, 2));
             int seed = Parser.parseSeed(stripCellData(row, 3));
             int leech = Parser.parseLeech(stripCellData(row, 4));
-
             metas.add(new TorrentMeta(name, size, age, seed, leech));
         }
 
@@ -120,9 +115,7 @@ class KickassTorrents implements TorrentEngine {
         try {
             String fullUrl = BASE_URL + searchTerm;
             String html = new String(Utils.get(fullUrl));
-            boolean hasRes = hasResults(html);
-            System.out.println("Has Results: " + hasRes);
-            return  hasRes ? parseHtml(html) : Collections.emptyList();
+            return hasResults(html) ? parseHtml(html) : Collections.emptyList();
         }
         catch (Exception ioe) {
            throw new TorrentEngineFailedException(ioe);
