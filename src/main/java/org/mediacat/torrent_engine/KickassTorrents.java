@@ -1,9 +1,9 @@
-package mediacat.torrent_engine;
+package org.mediacat.torrent_engine;
 
-import mediacat.Utils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.mediacat.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;

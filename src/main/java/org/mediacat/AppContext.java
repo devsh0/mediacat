@@ -1,4 +1,4 @@
-package mediacat;
+package org.mediacat;
 
 import okhttp3.OkHttpClient;
 

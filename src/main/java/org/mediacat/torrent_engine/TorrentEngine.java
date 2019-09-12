@@ -1,4 +1,4 @@
-package mediacat.torrent_engine;
+package org.mediacat.torrent_engine;
 
 import java.util.List;
 
