@@ -1,4 +1,4 @@
 module org.mediacat {
     requires org.jsoup;
-    requires okhttp3;
+    exports org.mediacat.torrent_engine;
 }

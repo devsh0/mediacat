@@ -3,7 +3,6 @@ package org.mediacat.torrent_engine;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.mediacat.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -84,9 +83,8 @@ class KickassTorrents implements TorrentEngine {
         return cell.text().trim();
     }
 
-    private static List<TorrentMeta> parseHtml(String html) {
+    private static List<TorrentMeta> parseHtml(Document doc) {
         List<TorrentMeta> metas = new ArrayList<>();
-        Document doc = Jsoup.parse(html);
         List<Element> rows = doc.select(SELECTORS.DATA_ROWS_ODD);
         rows.addAll(doc.select(SELECTORS.DATA_ROWS_EVEN));
 
@@ -114,8 +112,8 @@ class KickassTorrents implements TorrentEngine {
     public List<TorrentMeta> getTorrentMeta(String searchTerm) throws TorrentEngineFailedException {
         try {
             String fullUrl = BASE_URL + searchTerm;
-            String html = new String(Utils.get(fullUrl));
-            return hasResults(html) ? parseHtml(html) : Collections.emptyList();
+            Document document = Jsoup.connect(fullUrl).get();
+            return hasResults(document.html()) ? parseHtml(document) : Collections.emptyList();
         }
         catch (Exception ioe) {
            throw new TorrentEngineFailedException(ioe);
