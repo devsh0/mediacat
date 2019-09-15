@@ -11,12 +11,12 @@ import java.util.Properties;
 import static org.junit.jupiter.api.Assertions.*;
 
 class KatTest {
-    private static final Properties properties = new Properties();
-    private static Kat instance;
+    private final Kat instance;
 
-    static {
+    KatTest() {
         try {
             var inputStream = Files.newInputStream(Paths.get("src/main/resources/config.properties"));
+            Properties properties = new Properties();
             properties.load(inputStream);
             instance = Kat.getInstance(properties);
         } catch (IOException ioe) {
@@ -41,8 +41,6 @@ class KatTest {
         try {
             String search = "Sacred Games";
             List<TorrentMeta> metas = instance.getTorrentMeta(search);
-            for (TorrentMeta meta : metas)
-                System.out.println(meta);
             assertTrue(metas.size() > 0);
         } catch (TorrentEngineFailedException exc) {
             exc.getCause().printStackTrace();

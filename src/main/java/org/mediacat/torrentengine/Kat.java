@@ -158,8 +158,10 @@ class Kat implements TorrentEngine {
             int age = Parser.parseAge(extractSimpleCellData(row, 2));
             int seed = Parser.parseSeed(extractSimpleCellData(row, 3));
             int leech = Parser.parseLeech(extractSimpleCellData(row, 4));
-            String torrentUrl = this.baseUrl + Parser.parseTorrentUrl(extractTorrentUrl(row));
-            metas.add(new TorrentMeta(name, size, age, seed, leech, torrentUrl));
+            String torUrl = Parser.parseTorrentUrl(extractTorrentUrl(row));
+            String fullTorUrl = this.baseUrl + (torUrl.startsWith("/") ? "" : "/") + torUrl;
+
+            metas.add(new TorrentMeta(name, size, age, seed, leech, fullTorUrl));
         }
 
         return metas;
