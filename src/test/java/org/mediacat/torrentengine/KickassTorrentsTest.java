@@ -1,4 +1,4 @@
-package org.mediacat.torrent_engine;
+package org.mediacat.torrentengine;
 
 import org.junit.jupiter.api.Test;
 

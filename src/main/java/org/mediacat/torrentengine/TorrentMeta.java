@@ -1,4 +1,4 @@
-package org.mediacat.torrent_engine;
+package org.mediacat.torrentengine;
 
 public class TorrentMeta {
     private final String name;
