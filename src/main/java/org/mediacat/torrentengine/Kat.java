@@ -167,7 +167,9 @@ class Kat implements TorrentEngine {
             throws TorrentEngineFailedException {
         try {
             String fullUrl = baseUrl + searchPath + searchTerm;
-            Document document = Jsoup.connect(fullUrl).get();
+            Document document = Jsoup.connect(fullUrl)
+                    .proxy(this.proxy)
+                    .get();
             return hasResults(document.html()) ? parseHtml(document) : Collections.emptyList();
         } catch (Exception ioe) {
             throw new TorrentEngineFailedException(ioe);
