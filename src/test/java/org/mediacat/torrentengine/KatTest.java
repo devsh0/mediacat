@@ -41,6 +41,8 @@ class KatTest {
         try {
             String search = "Sacred Games";
             List<TorrentMeta> metas = instance.getTorrentMeta(search);
+            for (TorrentMeta meta : metas)
+                System.out.println(meta);
             assertTrue(metas.size() > 0);
         } catch (TorrentEngineFailedException exc) {
             exc.getCause().printStackTrace();

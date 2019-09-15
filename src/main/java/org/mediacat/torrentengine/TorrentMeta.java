@@ -6,13 +6,15 @@ public class TorrentMeta {
     private final int ageInDays;
     private final int seed;
     private final int leech;
+    private final String torrentUrl;
 
-    TorrentMeta(String name, long sizeInBytes, int ageInDays, int seed, int leech) {
+    TorrentMeta(String name, long sizeInBytes, int ageInDays, int seed, int leech, String torrentUrl) {
         this.name = name;
         this.sizeInBytes = sizeInBytes;
         this.ageInDays = ageInDays;
         this.seed = seed;
         this.leech = leech;
+        this.torrentUrl = torrentUrl;
     }
 
     public String getName() {
@@ -35,6 +37,10 @@ public class TorrentMeta {
         return leech;
     }
 
+    public String getTorrentUrl() {
+        return this.torrentUrl;
+    }
+
     @Override
     public String toString () {
         return "[" +
@@ -42,7 +48,8 @@ public class TorrentMeta {
                 "Size: " + this.sizeInBytes + " bytes, " +
                 "Age: " + this.ageInDays + " days, " +
                 "Seed: " + this.seed + ", " +
-                "Leech: " + this.leech +
+                "Leech: " + this.leech + ", " +
+                "URL: " + this.torrentUrl +
                 "]";
     }
 }

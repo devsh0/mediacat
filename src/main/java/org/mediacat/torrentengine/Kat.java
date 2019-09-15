@@ -74,12 +74,36 @@ class Kat implements TorrentEngine {
         static int parseLeech(String leech) {
             return Integer.parseInt(leech);
         }
+
+        static String parseTorrentUrl(String url) {
+            return url;
+        }
     }
 
     private volatile String baseUrl;
     private volatile String searchPath;
     private volatile Proxy proxy;
 
+    private Kat(Properties props) {
+        baseUrl = props.getProperty(PropKeys.torrentengine_kat_url)
+                .trim().toLowerCase();
+        searchPath = props.getProperty(PropKeys.torrentengine_kat_searchPath)
+                .trim().toLowerCase();
+
+        if (props.getProperty(PropKeys.torrentengine_kat_proxyIsSet).
+                trim().toLowerCase().equals("true")) {
+
+            String host = props.getProperty(PropKeys.torrentengine_kat_proxyHost)
+                    .trim().toLowerCase();
+            int port = Integer.parseInt(props.getProperty(
+                    PropKeys.torrentengine_kat_proxyPort).trim().toLowerCase());
+            String type = props.getProperty(PropKeys.torrentengine_kat_proxyType)
+                    .trim().toLowerCase();
+            SocketAddress address = new InetSocketAddress(host, port);
+            boolean isHttp = type.equals("http");
+            proxy = new Proxy(isHttp ? Proxy.Type.HTTP : Proxy.Type.SOCKS, address);
+        }
+    }
 
     // Getters
     public String getBaseUrl() {
@@ -107,37 +131,20 @@ class Kat implements TorrentEngine {
         this.proxy = proxy;
     }
 
-    private Kat(Properties props) {
-        baseUrl = props.getProperty(PropKeys.torrentengine_kat_url)
-                .trim().toLowerCase();
-        searchPath = props.getProperty(PropKeys.torrentengine_kat_searchPath)
-                .trim().toLowerCase();
-
-        if (props.getProperty(PropKeys.torrentengine_kat_proxyIsSet).
-                trim().toLowerCase().equals("true")) {
-
-            String host = props.getProperty(PropKeys.torrentengine_kat_proxyHost)
-                    .trim().toLowerCase();
-            int port = Integer.parseInt(props.getProperty(
-                    PropKeys.torrentengine_kat_proxyPort).trim().toLowerCase());
-            String type = props.getProperty(PropKeys.torrentengine_kat_proxyType)
-                    .trim().toLowerCase();
-
-            SocketAddress address = new InetSocketAddress(host, port);
-            boolean isHttp = type.equals("http");
-            proxy = new Proxy(isHttp ? Proxy.Type.HTTP : Proxy.Type.SOCKS, address);
-        }
-    }
-
     private String extractName(Element row) {
         Element mainLink = row.selectFirst(SELECTORS.CELL_MAIN_LINK);
         String innerText = mainLink.text().trim();
         return innerText.replaceAll("\\s", ".");
     }
 
-    private String extractCellData(Element row, int cellPosition) {
+    private String extractSimpleCellData(Element row, int cellPosition) {
         Element cell = row.select(SELECTORS.DATA_CELL).get(cellPosition);
         return cell.text().trim();
+    }
+
+    private String extractTorrentUrl(Element row) {
+        Element mainLink = row.selectFirst(SELECTORS.CELL_MAIN_LINK);
+        return mainLink.attr("href").trim().toLowerCase();
     }
 
     private List<TorrentMeta> parseHtml(Document doc) {
@@ -147,11 +154,12 @@ class Kat implements TorrentEngine {
 
         for (Element row : rows) {
             String name = extractName(row).replace(".", " ");
-            long size = Parser.parseSize(extractCellData(row, 0));
-            int age = Parser.parseAge(extractCellData(row, 2));
-            int seed = Parser.parseSeed(extractCellData(row, 3));
-            int leech = Parser.parseLeech(extractCellData(row, 4));
-            metas.add(new TorrentMeta(name, size, age, seed, leech));
+            long size = Parser.parseSize(extractSimpleCellData(row, 0));
+            int age = Parser.parseAge(extractSimpleCellData(row, 2));
+            int seed = Parser.parseSeed(extractSimpleCellData(row, 3));
+            int leech = Parser.parseLeech(extractSimpleCellData(row, 4));
+            String torrentUrl = this.baseUrl + Parser.parseTorrentUrl(extractTorrentUrl(row));
+            metas.add(new TorrentMeta(name, size, age, seed, leech, torrentUrl));
         }
 
         return metas;
