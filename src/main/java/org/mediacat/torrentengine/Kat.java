@@ -3,14 +3,18 @@ package org.mediacat.torrentengine;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.mediacat.PropKeys;
 
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 
-class KickassTorrents implements TorrentEngine {
-    static final KickassTorrents INSTANCE = new KickassTorrents();
-    private static final String BASE_URL = "https://kickasstorrents.to/usearch/";
+class Kat implements TorrentEngine {
+    private volatile static Kat instance;
 
     private interface SELECTORS {
         String DATA_ROWS_ODD = "table.data tr.odd";
@@ -38,7 +42,7 @@ class KickassTorrents implements TorrentEngine {
                     break;
             }
 
-            return (long)size;
+            return (long) size;
         }
 
         static int parseAge(String ageStr) {
@@ -72,18 +76,71 @@ class KickassTorrents implements TorrentEngine {
         }
     }
 
-    private static String extractName(Element row) {
+    private volatile String baseUrl;
+    private volatile String searchPath;
+    private volatile Proxy proxy;
+
+
+    // Getters
+    public String getBaseUrl() {
+        return baseUrl;
+    }
+
+    public String getSearchPath() {
+        return searchPath;
+    }
+
+    public Proxy getProxy() {
+        return proxy;
+    }
+
+    // Setters
+    public void setBaseUrl(String baseUrl) {
+        this.baseUrl = baseUrl;
+    }
+
+    public void setSearchPath(String searchPath) {
+        this.searchPath = searchPath;
+    }
+
+    public void setProxy(Proxy proxy) {
+        this.proxy = proxy;
+    }
+
+    private Kat(Properties props) {
+        baseUrl = props.getProperty(PropKeys.torrentengine_kat_url)
+                .trim().toLowerCase();
+        searchPath = props.getProperty(PropKeys.torrentengine_kat_searchPath)
+                .trim().toLowerCase();
+
+        if (props.getProperty(PropKeys.torrentengine_kat_proxyIsSet).
+                trim().toLowerCase().equals("true")) {
+
+            String host = props.getProperty(PropKeys.torrentengine_kat_proxyHost)
+                    .trim().toLowerCase();
+            int port = Integer.parseInt(props.getProperty(
+                    PropKeys.torrentengine_kat_proxyPort).trim().toLowerCase());
+            String type = props.getProperty(PropKeys.torrentengine_kat_proxyType)
+                    .trim().toLowerCase();
+
+            SocketAddress address = new InetSocketAddress(host, port);
+            boolean isHttp = type.equals("http");
+            proxy = new Proxy(isHttp ? Proxy.Type.HTTP : Proxy.Type.SOCKS, address);
+        }
+    }
+
+    private String extractName(Element row) {
         Element mainLink = row.selectFirst(SELECTORS.CELL_MAIN_LINK);
         String innerText = mainLink.text().trim();
         return innerText.replaceAll("\\s", ".");
     }
 
-    private static String extractCellData(Element row, int cellPosition) {
+    private String extractCellData(Element row, int cellPosition) {
         Element cell = row.select(SELECTORS.DATA_CELL).get(cellPosition);
         return cell.text().trim();
     }
 
-    private static List<TorrentMeta> parseHtml(Document doc) {
+    private List<TorrentMeta> parseHtml(Document doc) {
         List<TorrentMeta> metas = new ArrayList<>();
         List<Element> rows = doc.select(SELECTORS.DATA_ROWS_ODD);
         rows.addAll(doc.select(SELECTORS.DATA_ROWS_EVEN));
@@ -100,23 +157,27 @@ class KickassTorrents implements TorrentEngine {
         return metas;
     }
 
-    private static boolean hasResults(String html) {
+    private boolean hasResults(String html) {
         final String dummyHash = "E14B6EDF4AF7723D721342576D6CEC96A01C0247";
         return !html.contains(dummyHash);
     }
 
-    private KickassTorrents() {
-    }
-
     @Override
-    public List<TorrentMeta> getTorrentMeta(String searchTerm) throws TorrentEngineFailedException {
+    public List<TorrentMeta> getTorrentMeta(String searchTerm)
+            throws TorrentEngineFailedException {
         try {
-            String fullUrl = BASE_URL + searchTerm;
+            String fullUrl = baseUrl + searchPath + searchTerm;
             Document document = Jsoup.connect(fullUrl).get();
             return hasResults(document.html()) ? parseHtml(document) : Collections.emptyList();
+        } catch (Exception ioe) {
+            throw new TorrentEngineFailedException(ioe);
         }
-        catch (Exception ioe) {
-           throw new TorrentEngineFailedException(ioe);
-        }
+    }
+
+    static Kat getInstance(Properties properties) {
+        if (instance == null)
+            instance = new Kat(properties);
+
+        return instance;
     }
 }
