@@ -174,7 +174,7 @@ class Kat implements TorrentEngine {
         }
     }
 
-    static Kat getInstance(Properties properties) {
+    synchronized static Kat getInstance(Properties properties) {
         if (instance == null)
             instance = new Kat(properties);
 
