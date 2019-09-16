@@ -3,15 +3,11 @@ package org.mediacat.torrentengine;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.mediacat.PropKeys;
 
-import java.net.InetSocketAddress;
 import java.net.Proxy;
-import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Properties;
 
 class Kat implements TorrentEngine {
     private volatile static Kat instance;
@@ -80,37 +76,14 @@ class Kat implements TorrentEngine {
         }
     }
 
-    private volatile String baseUrl;
-    private volatile String searchPath;
-    private volatile Proxy proxy;
+    private String baseUrl;
+    private String searchPath;
+    private Proxy proxy;
 
-    //todo: move this somewhere else...this will result in repetition
-    private Kat(Properties props) {
-        baseUrl = props.getProperty(PropKeys.engine.kat.url)
-                .trim().toLowerCase();
-        searchPath = props.getProperty(PropKeys.engine.kat.searchPath)
-                .trim().toLowerCase();
-
-        if (props.getProperty(PropKeys.engine.kat.proxyIsSet).
-                trim().toLowerCase().equals("true")) {
-
-            String host = props.getProperty(PropKeys.engine.kat.proxyHost)
-                    .trim().toLowerCase();
-            int port = Integer.parseInt(props.getProperty(
-                    PropKeys.engine.kat.proxyPort).trim().toLowerCase());
-            String type = props.getProperty(PropKeys.engine.kat.proxyType)
-                    .trim().toLowerCase();
-            SocketAddress address = new InetSocketAddress(host, port);
-            boolean isHttp = type.equals("http");
-            proxy = new Proxy(isHttp ? Proxy.Type.HTTP : Proxy.Type.SOCKS, address);
-        }
-
-        TorrentEngine.registerEngine(this);
-    }
-
-    @Override
-    public void registerSelf() {
-        TorrentEngine.registerEngine(this);
+    private Kat(String baseUrl, String searchPath, Proxy proxy) {
+        this.baseUrl = baseUrl;
+        this.searchPath = searchPath;
+        this.proxy = proxy;
     }
 
     // Getters
@@ -200,9 +173,9 @@ class Kat implements TorrentEngine {
         }
     }
 
-    synchronized static Kat getInstance(Properties properties) {
+    static Kat getInstance(String baseUrl, String searchPath, Proxy proxy) {
         if (instance == null)
-            instance = new Kat(properties);
+            instance = new Kat(baseUrl, searchPath, proxy);
 
         return instance;
     }
