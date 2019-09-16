@@ -84,6 +84,7 @@ class Kat implements TorrentEngine {
     private volatile String searchPath;
     private volatile Proxy proxy;
 
+    //todo: move this somewhere else...this will result in repetition
     private Kat(Properties props) {
         baseUrl = props.getProperty(PropKeys.torrentengine_kat_url)
                 .trim().toLowerCase();
@@ -144,7 +145,7 @@ class Kat implements TorrentEngine {
 
     private String extractTorrentUrl(Element row) {
         Element mainLink = row.selectFirst(SELECTORS.CELL_MAIN_LINK);
-        return mainLink.attr("href").trim().toLowerCase();
+        return mainLink.attr("href").trim();
     }
 
     private List<TorrentMeta> parseHtml(Document doc) {
