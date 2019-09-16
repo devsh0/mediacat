@@ -86,48 +86,61 @@ class Kat implements TorrentEngine {
 
     //todo: move this somewhere else...this will result in repetition
     private Kat(Properties props) {
-        baseUrl = props.getProperty(PropKeys.torrentengine_kat_url)
+        baseUrl = props.getProperty(PropKeys.engine.kat.url)
                 .trim().toLowerCase();
-        searchPath = props.getProperty(PropKeys.torrentengine_kat_searchPath)
+        searchPath = props.getProperty(PropKeys.engine.kat.searchPath)
                 .trim().toLowerCase();
 
-        if (props.getProperty(PropKeys.torrentengine_kat_proxyIsSet).
+        if (props.getProperty(PropKeys.engine.kat.proxyIsSet).
                 trim().toLowerCase().equals("true")) {
 
-            String host = props.getProperty(PropKeys.torrentengine_kat_proxyHost)
+            String host = props.getProperty(PropKeys.engine.kat.proxyHost)
                     .trim().toLowerCase();
             int port = Integer.parseInt(props.getProperty(
-                    PropKeys.torrentengine_kat_proxyPort).trim().toLowerCase());
-            String type = props.getProperty(PropKeys.torrentengine_kat_proxyType)
+                    PropKeys.engine.kat.proxyPort).trim().toLowerCase());
+            String type = props.getProperty(PropKeys.engine.kat.proxyType)
                     .trim().toLowerCase();
             SocketAddress address = new InetSocketAddress(host, port);
             boolean isHttp = type.equals("http");
             proxy = new Proxy(isHttp ? Proxy.Type.HTTP : Proxy.Type.SOCKS, address);
         }
+
+        TorrentEngine.registerEngine(this);
+    }
+
+    @Override
+    public void registerSelf() {
+        TorrentEngine.registerEngine(this);
     }
 
     // Getters
+    @Override
     public String getBaseUrl() {
         return baseUrl;
     }
 
+    @Override
     public String getSearchPath() {
         return searchPath;
     }
 
+    @Override
     public Proxy getProxy() {
         return proxy;
     }
 
     // Setters
+    @Override
     public void setBaseUrl(String baseUrl) {
         this.baseUrl = baseUrl;
     }
 
+    @Override
     public void setSearchPath(String searchPath) {
         this.searchPath = searchPath;
     }
 
+    @Override
     public void setProxy(Proxy proxy) {
         this.proxy = proxy;
     }

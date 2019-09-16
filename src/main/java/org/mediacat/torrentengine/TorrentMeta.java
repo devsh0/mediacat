@@ -7,6 +7,7 @@ public class TorrentMeta {
     private final int seed;
     private final int leech;
     private final String torrentUrl;
+    private volatile String magnetUrl;
 
     TorrentMeta(String name, long sizeInBytes, int ageInDays, int seed, int leech, String torrentUrl) {
         this.name = name;
@@ -15,6 +16,12 @@ public class TorrentMeta {
         this.seed = seed;
         this.leech = leech;
         this.torrentUrl = torrentUrl;
+    }
+
+    TorrentMeta(String name, long sizeInBytes, int ageInDays, int seed, int leech,
+                String torrentUrl, String magnetUrl) {
+        this(name, sizeInBytes, ageInDays, seed, leech, torrentUrl);
+        this.magnetUrl = magnetUrl;
     }
 
     public String getName() {
@@ -41,6 +48,14 @@ public class TorrentMeta {
         return this.torrentUrl;
     }
 
+    public String getMagnetUrl() {
+        return magnetUrl;
+    }
+
+    public void setMagnetUrl(String magnetUrl) {
+        this.magnetUrl = magnetUrl;
+    }
+
     @Override
     public String toString () {
         return "[" +
@@ -49,7 +64,8 @@ public class TorrentMeta {
                 "Age: " + this.ageInDays + " days, " +
                 "Seed: " + this.seed + ", " +
                 "Leech: " + this.leech + ", " +
-                "URL: " + this.torrentUrl +
+                "URL: " + this.torrentUrl + ", " +
+                "Magnet: " + this.magnetUrl +
                 "]";
     }
 }
