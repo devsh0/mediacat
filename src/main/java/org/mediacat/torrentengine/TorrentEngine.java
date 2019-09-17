@@ -17,4 +17,8 @@ public interface TorrentEngine {
     void setSearchPath(String searchPath);
 
     void setProxy(Proxy proxy);
+
+    default String getMagnet(String torrentUrl) throws TorrentEngineFailedException {
+        throw new UnsupportedOperationException("Operation not supported");
+    }
 }

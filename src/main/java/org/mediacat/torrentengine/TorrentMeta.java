@@ -9,7 +9,10 @@ public class TorrentMeta {
     private final String torrentUrl;
     private volatile String magnetUrl;
 
-    TorrentMeta(String name, long sizeInBytes, int ageInDays, int seed, int leech, String torrentUrl) {
+    private volatile String engineName;
+
+    TorrentMeta(String name, long sizeInBytes, int ageInDays, int seed,
+                int leech, String torrentUrl) {
         this.name = name;
         this.sizeInBytes = sizeInBytes;
         this.ageInDays = ageInDays;
@@ -52,8 +55,18 @@ public class TorrentMeta {
         return magnetUrl;
     }
 
-    public void setMagnetUrl(String magnetUrl) {
+    public String getEngineName() {
+        return this.engineName;
+    }
+
+    public TorrentMeta setMagnetUrl(String magnetUrl) {
         this.magnetUrl = magnetUrl;
+        return this;
+    }
+
+    public TorrentMeta setEngineName(String name) {
+        this.engineName = name;
+        return this;
     }
 
     @Override
@@ -67,5 +80,9 @@ public class TorrentMeta {
                 "URL: " + this.torrentUrl + ", " +
                 "Magnet: " + this.magnetUrl +
                 "]";
+    }
+
+    public boolean equals(TorrentMeta meta) {
+        return this.torrentUrl.equals(meta.torrentUrl);
     }
 }

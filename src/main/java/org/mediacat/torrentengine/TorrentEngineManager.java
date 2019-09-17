@@ -9,13 +9,15 @@ import java.lang.reflect.Method;
 import java.net.Proxy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class TorrentEngineManager implements Observer {
     private static final java.lang.Object LOCK = new java.lang.Object();
     private static TorrentEngineManager instance;
 
     private TorrentEngineSettings engineSettings;
-    private final List<TorrentEngine> engineImples = new ArrayList<>();
+    private final List<TorrentEngine> engineImpls = new ArrayList<>();
     private final String methodName = "getInstance";
 
     private TorrentEngineManager(TorrentEngineSettings engineSettings) {
@@ -25,12 +27,12 @@ public class TorrentEngineManager implements Observer {
 
     private void setupEngines() {
         List<String> engineImplNames = engineSettings.getEngineImplNames();
-        engineImples.clear();
+        engineImpls.clear();
         engineImplNames.clear();
         engineImplNames.addAll(engineSettings.getEngineImplNames());
         for (String implName : engineImplNames) {
             TorrentEngine temp = getEngineInstanceFor(implName);
-            engineImples.add(temp);
+            engineImpls.add(temp);
         }
     }
 
@@ -51,21 +53,52 @@ public class TorrentEngineManager implements Observer {
         }
     }
 
-    public List<TorrentMeta> getTorrentMeta(String searchTerm) throws TorrentEngineFailedException {
-        return engineImples.get(0).getTorrentMeta(searchTerm);
+    // todo: caller must also specify how to filter the torrents
+    public List<TorrentMeta> getTorrentMeta(String searchTerm) {
+        synchronized (LOCK) {
+            try {
+                // todo: more complex logic to determine which engine to use
+                TorrentEngine engine = engineImpls.get(0);
+                String engineName = engine.getClass().getCanonicalName();
+                return engine.getTorrentMeta(searchTerm).stream()
+                        .map(meta -> meta.setEngineName(engineName))
+                        .collect(Collectors.toList());
+            } catch (TorrentEngineFailedException exc) {
+                // todo: cycle through engines
+            }
+        }
+
+        // todo: must not return null
+        return null;
+    }
+
+    public String getMagnetOf(TorrentMeta meta) throws TorrentEngineFailedException {
+        synchronized (LOCK) {
+            String magnet = meta.getMagnetUrl();
+            if (magnet != null && magnet.startsWith("magnet:"))
+                return magnet;
+
+            String engineName = meta.getEngineName();
+            TorrentEngine usedEngine = engineImpls.stream()
+                    .filter(e -> e.getClass().getCanonicalName().equals(engineName))
+                    .findFirst().orElse(null);
+
+            return Objects.requireNonNull(usedEngine)
+                    .getMagnet(meta.getTorrentUrl());
+        }
     }
 
     @Override
     public void update(Object object) {
         synchronized (LOCK) {
-            this.engineSettings = (TorrentEngineSettings) object;
+            engineSettings = (TorrentEngineSettings) object;
 
             // updates state of all impls, without analyzing the changes..duh!
-            for (TorrentEngine engine : engineImples) {
+            for (TorrentEngine engine : engineImpls) {
                 String implName = engine.getClass().getCanonicalName();
-                String baseUrl = this.engineSettings.getBaseUrlFor(implName);
-                String searchPath = this.engineSettings.getSearchPathFor(implName);
-                Proxy proxy = this.engineSettings.getProxyFor(implName);
+                String baseUrl = engineSettings.getBaseUrlFor(implName);
+                String searchPath = engineSettings.getSearchPathFor(implName);
+                Proxy proxy = engineSettings.getProxyFor(implName);
 
                 engine.setBaseUrl(baseUrl);
                 engine.setSearchPath(searchPath);

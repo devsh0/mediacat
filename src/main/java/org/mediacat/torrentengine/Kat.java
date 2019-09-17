@@ -4,6 +4,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import java.io.IOException;
 import java.net.Proxy;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,6 +18,7 @@ final class Kat implements TorrentEngine {
         String DATA_ROWS_EVEN = "table.data tr.even";
         String CELL_MAIN_LINK = "a.cellMainLink";
         String DATA_CELL = "td.center";
+        String MAGNET_LINK = "a[title='Magnet link']";
     }
 
     private static class Parser {
@@ -102,6 +104,20 @@ final class Kat implements TorrentEngine {
         return proxy;
     }
 
+    @Override
+    public String getMagnet(String torrentUrl) throws TorrentEngineFailedException {
+        try {
+            Document doc = getDocument(torrentUrl);
+            return doc.select(SELECTORS.MAGNET_LINK).attr("href");
+        } catch (Exception e) {
+            throw new TorrentEngineFailedException(e);
+        }
+    }
+
+    private Document getDocument(String url) throws IOException {
+        return Jsoup.connect(url).proxy(proxy).get();
+    }
+
     // Setters
     @Override
     public void setBaseUrl(String baseUrl) {
@@ -164,16 +180,14 @@ final class Kat implements TorrentEngine {
             throws TorrentEngineFailedException {
         try {
             String fullUrl = baseUrl + searchPath + searchTerm;
-            Document document = Jsoup.connect(fullUrl)
-                    .proxy(this.proxy)
-                    .get();
+            Document document = getDocument(fullUrl);
             return hasResults(document.html()) ? parseHtml(document) : Collections.emptyList();
-        } catch (Exception ioe) {
-            throw new TorrentEngineFailedException(ioe);
+        } catch (Exception e) {
+            throw new TorrentEngineFailedException(e);
         }
     }
 
-    static Kat getInstance(String baseUrl, String searchPath, Proxy proxy) {
+    static TorrentEngine getInstance(String baseUrl, String searchPath, Proxy proxy) {
         if (instance == null)
             instance = new Kat(baseUrl, searchPath, proxy);
 
