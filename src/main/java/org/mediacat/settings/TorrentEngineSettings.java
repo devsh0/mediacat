@@ -1,4 +1,7 @@
-package org.mediacat.torrentengine;
+package org.mediacat.settings;
+
+import org.mediacat.utils.Object;
+import org.mediacat.utils.Observer;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,8 +16,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-class TorrentEngineSettings {
-    private static final Object LOCK = new Object();
+public class TorrentEngineSettings implements Object {
+    private static final java.lang.Object LOCK = new java.lang.Object();
     private static TorrentEngineSettings instance;
 
     private interface Key {
@@ -30,7 +33,7 @@ class TorrentEngineSettings {
             }
         }
 
-        // settings that apply to individual engines
+        // trailers of settings that apply to individual engines
         interface engine {
             String url = ".url";
             String searchPath = ".searchPath";
@@ -45,48 +48,57 @@ class TorrentEngineSettings {
     }
 
     private final Properties props = new Properties();
-    private final List<String> engineImpls = new ArrayList<>();
+    private final List<String> engineImplNames = new ArrayList<>();
+    private final List<Observer> observers = new ArrayList<>();
 
-    TorrentEngineSettings(InputStream is) {
-        load(is);
+    private TorrentEngineSettings(InputStream is) {
+        reload(is);
     }
 
-    private boolean validateImpl(String impl) {
-        if (!engineImpls.contains(impl))
-            throw new IllegalArgumentException("Engine implementation does not exist");
-
-        return true;
-    }
-
-    private void loadEngineImpls() {
-        String[] all = props.getProperty(Key.impls).split(",");
-        engineImpls.addAll(Arrays.asList(all));
-    }
-
-    void load(InputStream is) {
+    public void reload(InputStream is) {
         synchronized (LOCK) {
             try {
                 this.props.clear();
                 this.props.load(is);
                 this.loadEngineImpls();
+                this.broadcast();
             } catch (IOException ioe) {
                 throw new RuntimeException(ioe);
             }
         }
     }
 
-    private boolean isProxySetFor(String impl) {
+    public void reload(String filePath) {
+        Path p = Paths.get(filePath);
+        try (InputStream is = Files.newInputStream(p)) {
+            reload(is);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void loadEngineImpls() {
+        String[] all = props.getProperty(Key.impls).split(",");
+        engineImplNames.addAll(Arrays.asList(all));
+    }
+
+    private void checkImpl(String implName) {
+        if (!engineImplNames.contains(implName))
+            throw new IllegalArgumentException("Engine implementation does not exist");
+    }
+
+    public boolean isProxySetFor(String impl) {
         synchronized (LOCK) {
             if (impl.equals("*"))
                 return props.getProperty(Key.global.proxy.isSet).equals("true");
 
-            validateImpl(impl);
+            checkImpl(impl);
             String propertyKey = impl + Key.engine.proxy.isSet;
             return props.getProperty(propertyKey).equals("true");
         }
     }
 
-    Proxy getProxyFor(String impl) {
+    public Proxy getProxyFor(String impl) {
         synchronized (LOCK) {
             if (isProxySetFor(impl)) {
                 boolean isGlobal = impl.equals("*");
@@ -108,27 +120,43 @@ class TorrentEngineSettings {
         }
     }
 
-    String getUrlFor(String impl) {
+    public String getBaseUrlFor(String impl) {
         synchronized (LOCK) {
-            validateImpl(impl);
+            checkImpl(impl);
             return props.getProperty(impl + Key.engine.url);
         }
     }
 
-    String getSearchPathFor(String impl) {
+    public String getSearchPathFor(String impl) {
         synchronized (LOCK) {
-            validateImpl(impl);
+            checkImpl(impl);
             return props.getProperty(impl + Key.engine.searchPath);
         }
     }
 
-    List<String> getEngineImpls() {
+    public List<String> getEngineImplNames() {
         synchronized (LOCK) {
-            return new ArrayList<>(engineImpls);
+            return new ArrayList<>(engineImplNames);
         }
     }
 
-    static TorrentEngineSettings instance(InputStream is) {
+    @Override
+    public void register(Observer observer) {
+        synchronized (LOCK) {
+            observers.add(observer);
+        }
+    }
+
+    @Override
+    public void broadcast() {
+        synchronized (LOCK) {
+            for (Observer o : observers) {
+                o.update(this);
+            }
+        }
+    }
+
+    public static TorrentEngineSettings getInstance(InputStream is) {
         synchronized (LOCK) {
             if (instance == null) {
                 instance = new TorrentEngineSettings(is);
@@ -137,11 +165,11 @@ class TorrentEngineSettings {
         return instance;
     }
 
-    static TorrentEngineSettings instance(String filePath) {
+    public static TorrentEngineSettings getInstance(String filePath) {
         Path p = Paths.get(filePath);
         TorrentEngineSettings tes;
         try (InputStream is = Files.newInputStream(p)) {
-            tes = instance(is);
+            tes = getInstance(is);
         } catch (IOException ioe) {
             throw new RuntimeException(ioe);
         }

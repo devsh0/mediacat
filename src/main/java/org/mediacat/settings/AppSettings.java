@@ -1,4 +1,4 @@
-package org.mediacat;
+package org.mediacat.settings;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,9 +7,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 
-public class AppConfigs {
+public class AppSettings {
     private static final Object LOCK = new Object();
-    private static AppConfigs instance;
+    private static AppSettings instance;
 
     private final Properties properties = new Properties();
 
@@ -18,7 +18,7 @@ public class AppConfigs {
         String version = "org.mediacat.app.version";
     }
 
-    public AppConfigs(InputStream is) {
+    public AppSettings(InputStream is) {
         try {
             this.properties.load(is);
         } catch (IOException ioe) {
@@ -38,24 +38,24 @@ public class AppConfigs {
         }
     }
 
-    public static AppConfigs instance(InputStream is) {
+    public static AppSettings getInstance(InputStream is) {
         synchronized (LOCK) {
             if (instance == null) {
-                instance = new AppConfigs(is);
+                instance = new AppSettings(is);
             }
         }
         return instance;
     }
 
-    public static AppConfigs instance(String filePath) {
+    public static AppSettings getInstance(String filePath) {
         Path p = Paths.get(filePath);
-        AppConfigs appConfigs;
+        AppSettings appSettings;
         try (InputStream is = Files.newInputStream(p)) {
-            appConfigs = instance(is);
+            appSettings = getInstance(is);
         } catch (IOException ioe) {
             throw new RuntimeException(ioe);
         }
 
-        return appConfigs;
+        return appSettings;
     }
 }

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-class Kat implements TorrentEngine {
+final class Kat implements TorrentEngine {
     private volatile static Kat instance;
 
     private interface SELECTORS {
@@ -67,8 +67,8 @@ class Kat implements TorrentEngine {
             return Integer.parseInt(seedStr);
         }
 
-        static int parseLeech(String leech) {
-            return Integer.parseInt(leech);
+        static int parseLeech(String leechStr) {
+            return Integer.parseInt(leechStr);
         }
 
         static String parseTorrentUrl(String url) {
