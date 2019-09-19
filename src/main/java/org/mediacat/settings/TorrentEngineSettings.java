@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
-import java.net.SocketAddress;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -98,6 +97,7 @@ public class TorrentEngineSettings implements Object {
         }
     }
 
+    // todo: proxy is broken
     public Proxy getProxyFor(String impl) {
         synchronized (LOCK) {
             if (isProxySetFor(impl)) {
@@ -112,7 +112,7 @@ public class TorrentEngineSettings implements Object {
                 int port = isGlobal ? Integer.parseInt(props.getProperty(Key.global.proxy.port))
                         : Integer.parseInt(props.getProperty(impl + Key.engine.proxy.port));
 
-                SocketAddress address = new InetSocketAddress(host, port);
+                InetSocketAddress address = new InetSocketAddress(host, port);
                 return new Proxy(type, address);
             }
 

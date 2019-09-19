@@ -28,8 +28,6 @@ public class TorrentEngineManager implements Observer {
     private void setupEngines() {
         List<String> engineImplNames = engineSettings.getEngineImplNames();
         engineImpls.clear();
-        engineImplNames.clear();
-        engineImplNames.addAll(engineSettings.getEngineImplNames());
         for (String implName : engineImplNames) {
             TorrentEngine temp = getEngineInstanceFor(implName);
             engineImpls.add(temp);
@@ -65,11 +63,9 @@ public class TorrentEngineManager implements Observer {
                         .collect(Collectors.toList());
             } catch (TorrentEngineFailedException exc) {
                 // todo: cycle through engines
+                throw new RuntimeException(exc);
             }
         }
-
-        // todo: must not return null
-        return null;
     }
 
     public String getMagnetOf(TorrentMeta meta) throws TorrentEngineFailedException {
