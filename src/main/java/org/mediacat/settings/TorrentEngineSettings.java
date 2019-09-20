@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-public class TorrentEngineSettings implements Object {
+public final class TorrentEngineSettings implements Object {
     private static final java.lang.Object LOCK = new java.lang.Object();
     private static TorrentEngineSettings instance;
 
@@ -57,10 +57,10 @@ public class TorrentEngineSettings implements Object {
     public void reload(InputStream is) {
         synchronized (LOCK) {
             try {
-                this.props.clear();
-                this.props.load(is);
-                this.loadEngineImpls();
-                this.broadcast();
+                props.clear();
+                props.load(is);
+                loadEngineImpls();
+                broadcast();
             } catch (IOException ioe) {
                 throw new RuntimeException(ioe);
             }
@@ -156,10 +156,13 @@ public class TorrentEngineSettings implements Object {
         }
     }
 
-    public static TorrentEngineSettings getInstance(InputStream is) {
+    public static TorrentEngineSettings getInstance(InputStream... is) {
         synchronized (LOCK) {
             if (instance == null) {
-                instance = new TorrentEngineSettings(is);
+                if (is.length == 0)
+                    throw new IllegalStateException("settings not loaded yet..." +
+                            "input stream is required");
+                instance = new TorrentEngineSettings(is[0]);
             }
         }
         return instance;

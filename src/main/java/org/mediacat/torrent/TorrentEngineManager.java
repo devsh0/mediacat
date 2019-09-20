@@ -1,4 +1,4 @@
-package org.mediacat.torrentengine;
+package org.mediacat.torrent;
 
 import org.mediacat.settings.TorrentEngineSettings;
 import org.mediacat.utils.Object;
@@ -79,8 +79,11 @@ public class TorrentEngineManager implements Observer {
                     .filter(e -> e.getClass().getCanonicalName().equals(engineName))
                     .findFirst().orElse(null);
 
-            return Objects.requireNonNull(usedEngine)
+            magnet = Objects.requireNonNull(usedEngine)
                     .getMagnet(meta.getTorrentUrl());
+
+            meta.setMagnetUrl(magnet);
+            return magnet;
         }
     }
 

@@ -1,4 +1,4 @@
-package org.mediacat.torrentengine;
+package org.mediacat.torrent;
 
 import java.net.Proxy;
 import java.util.List;

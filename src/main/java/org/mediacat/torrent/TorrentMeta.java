@@ -1,4 +1,7 @@
-package org.mediacat.torrentengine;
+package org.mediacat.torrent;
+
+import org.mediacat.filter.Quality;
+import org.mediacat.settings.TorrentEngineSettings;
 
 public class TorrentMeta {
     private final String name;
@@ -7,13 +10,16 @@ public class TorrentMeta {
     private final int seed;
     private final int leech;
     private final String torrentUrl;
-    private volatile String magnetUrl;
+    private final Quality quality;
 
+    private volatile boolean trustedUploader;
+    private volatile String magnetUrl;
     private volatile String engineName;
 
     TorrentMeta(String name, long sizeInBytes, int ageInDays, int seed,
                 int leech, String torrentUrl) {
         this.name = name;
+        this.quality = Quality.fromName(name);
         this.sizeInBytes = sizeInBytes;
         this.ageInDays = ageInDays;
         this.seed = seed;
@@ -47,11 +53,23 @@ public class TorrentMeta {
         return leech;
     }
 
+    public Quality getQuality() {
+        return quality;
+    }
+
+    public boolean isTrustedUploader() {
+        return trustedUploader;
+    }
+
     public String getTorrentUrl() {
         return this.torrentUrl;
     }
 
-    public String getMagnetUrl() {
+    public String getMagnetUrl() throws TorrentEngineFailedException {
+        if (magnetUrl == null)
+            magnetUrl = TorrentEngineManager
+                    .getInstance(TorrentEngineSettings.getInstance())
+                    .getMagnetOf(this);
         return magnetUrl;
     }
 
@@ -69,8 +87,13 @@ public class TorrentMeta {
         return this;
     }
 
+    public TorrentMeta setTrustedUploader(boolean b) {
+        trustedUploader = b;
+        return this;
+    }
+
     @Override
-    public String toString () {
+    public String toString() {
         return "[" +
                 "Name: " + this.name + ", " +
                 "Size: " + this.sizeInBytes + " bytes, " +

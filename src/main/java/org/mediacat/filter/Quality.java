@@ -20,13 +20,13 @@ public class Quality {
         return this.name;
     }
 
-    private static final String THEATRE_REGEX = "((hd|new)[ -]?)cam|(hd)?ts|telesync|p(re)?dvd([- ]rip)?|cam[- ]rip";
+    private static final String THEATRE_REGEX = "((hd|new)[ -]?)cam|hd[ -]?ts|telesync|p(re)?dvd([- ]rip)?|cam[- ]rip";
     public static final Quality THEATRE = new Quality("THEATRE", THEATRE_REGEX);
 
     private static final String HD_REGEX =
             "((web-?(dl)?|h?d|ppv|dv[db]|h?d?tv|vod|full|iso|d(s|th|vb)|sat)[ -]?rip)|" +
                     "((dvd|bd)?[ -]?scr)|" +
-                    "(web[ -]?(dl|hd|cap)|720p[- .]?web)|" +
+                    "(web[ -]?(dl|hd|cap)?|720p[- .]?web)|" +
                     "((hd-?)?tc|wp|workprint|telecine|ppv|(dvd|vod)r|dvd[- ]?(full|mux)|(hd|pd)[-]?tv)";
     public static final Quality HD = new Quality("HD", HD_REGEX);
 
@@ -61,8 +61,10 @@ public class Quality {
         int greatestLen = 0;
         while (matcher.find()) {
             String match = matcher.group();
-            if (match != null)
+            if (match != null) {
+                System.out.println(match);
                 greatestLen = Math.max(match.length(), greatestLen);
+            }
         }
         return greatestLen;
     }

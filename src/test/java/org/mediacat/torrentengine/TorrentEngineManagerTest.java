@@ -3,6 +3,9 @@ package org.mediacat.torrentengine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mediacat.settings.TorrentEngineSettings;
+import org.mediacat.torrent.TorrentEngineFailedException;
+import org.mediacat.torrent.TorrentEngineManager;
+import org.mediacat.torrent.TorrentMeta;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package org.mediacat.torrentengine;
+package org.mediacat.torrent;
 
 class TorrentEngineState {
     private final TorrentEngine engine;

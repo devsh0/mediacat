@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 
-public class AppSettings {
+public final class AppSettings {
     private static final Object LOCK = new Object();
     private static AppSettings instance;
 

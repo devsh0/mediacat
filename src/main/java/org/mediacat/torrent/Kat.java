@@ -1,4 +1,4 @@
-package org.mediacat.torrentengine;
+package org.mediacat.torrent;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -19,6 +19,7 @@ final class Kat implements TorrentEngine {
         String CELL_MAIN_LINK = "a.cellMainLink";
         String DATA_CELL = "td.center";
         String MAGNET_LINK = "a[title='Magnet link']";
+        String TRUSTED_UPLOADED = "i[title='Verified Uploader']";
     }
 
     private static class Parser {
@@ -155,6 +156,10 @@ final class Kat implements TorrentEngine {
         return mainLink.attr("href").trim();
     }
 
+    private boolean isTrustedUploader(Element row) {
+        return row.select(SELECTORS.TRUSTED_UPLOADED).size() > 0;
+    }
+
     private List<TorrentMeta> parseHtml(Document doc) {
         List<TorrentMeta> metas = new ArrayList<>();
         List<Element> rows = doc.select(SELECTORS.DATA_ROWS_ODD);
@@ -168,8 +173,11 @@ final class Kat implements TorrentEngine {
             int leech = Parser.parseLeech(extractSimpleCellData(row, 4));
             String torUrl = Parser.parseTorrentUrl(extractTorrentUrl(row));
             String fullTorUrl = this.baseUrl + (torUrl.startsWith("/") ? "" : "/") + torUrl;
+            boolean trustedUploader = isTrustedUploader(row);
 
-            metas.add(new TorrentMeta(name, size, age, seed, leech, fullTorUrl));
+            TorrentMeta meta = new TorrentMeta(name, size, age, seed, leech, fullTorUrl)
+                    .setTrustedUploader(trustedUploader);
+            metas.add(meta);
         }
 
         return metas;
