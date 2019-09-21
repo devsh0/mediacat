@@ -1,6 +1,6 @@
 package org.mediacat.torrent;
 
-import org.mediacat.filter.FilterCriteria;
+import org.mediacat.filter.Filter;
 import org.mediacat.settings.TorrentEngineSettings;
 import org.mediacat.utils.Observer;
 
@@ -8,7 +8,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.Proxy;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -52,18 +51,6 @@ public class TorrentEngineManager implements Observer {
         }
     }
 
-    private List<TorrentInfo> filter(List<TorrentInfo> infos, FilterCriteria c) {
-        List<TorrentInfo> filtered = new ArrayList<>();
-        for (var torrent : infos) {
-            if (Arrays.asList(c.allowedQualities).contains(torrent.getQuality())) {
-                if (!torrent.byTrustedUploader() && !c.includeUntrusted)
-                    continue;
-                filtered.add(torrent);
-            }
-        }
-        return filtered;
-    }
-
     private TorrentEngine getCurrentEngine() {
         return engineImpls.get(engineIndex);
     }
@@ -78,15 +65,15 @@ public class TorrentEngineManager implements Observer {
         }
     }
 
-    private List<TorrentInfo> infoListHelper(TorrentEngine engine, String searchTerm, FilterCriteria fc)
+    private List<TorrentInfo> infoListHelper(TorrentEngine engine, String search, Filter filter)
             throws TorrentEngineFailedException {
         List<TorrentInfo> infos = new ArrayList<>();
-        int fetchCount = fc.fetchCount;
+        int fetchCount = engineSettings.getFetchCount();
         int page = 0;
         do {
             ++page;
-            var temp = engine.getTorrentInfoList(searchTerm, page);
-            temp = filter(temp, fc);
+            var temp = engine.getTorrentInfoList(search, page);
+            temp = filter.filter(temp);
 
             // we're outta results
             if (temp.isEmpty())
@@ -100,7 +87,7 @@ public class TorrentEngineManager implements Observer {
         return infos;
     }
 
-    public List<TorrentInfo> getTorrentInfoList(String searchTerm, FilterCriteria fc)
+    public List<TorrentInfo> getTorrentInfoList(String searchTerm, Filter filter)
             throws TorrentEngineFailedException {
         synchronized (LOCK) {
             List<TorrentInfo> infoList;
@@ -108,7 +95,7 @@ public class TorrentEngineManager implements Observer {
             int workingEngine = engineIndex;
 
             do {
-                infoList = infoListHelper(engine, searchTerm, fc);
+                infoList = infoListHelper(engine, searchTerm, filter);
                 if (infoList.isEmpty()) {
                     try {
                         engine = incrementIndexAndGetEngine();
@@ -122,6 +109,7 @@ public class TorrentEngineManager implements Observer {
                 }
             } while (infoList.isEmpty());
 
+            // todo: sort the infoList
             return infoList;
         }
     }

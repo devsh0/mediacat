@@ -1,7 +1,7 @@
 package org.mediacat.torrent;
 
 import org.junit.jupiter.api.Test;
-import org.mediacat.filter.FilterCriteria;
+import org.mediacat.filter.Filter;
 import org.mediacat.filter.Quality;
 import org.mediacat.settings.TorrentEngineSettings;
 
@@ -13,26 +13,33 @@ public class TorrentEngineManagerTest {
     private final TorrentEngineManager manager = TorrentEngineManager.getInstance(settings);
     private final Quality[] allQualities = new Quality[]{Quality.THEATRE, Quality.HD, Quality.BLURAY};
     private final String search = "Game of Thrones";
+    private final int defaultFetchCount = 20;
 
     @Test
     public void torrentMetaListIncludedNElementsTest() {
         try {
-            int fetchCount = 10;
-            var fc = new FilterCriteria(true, allQualities, fetchCount);
-            var infoList = manager.getTorrentInfoList(search, fc);
-            assertEquals(fetchCount, infoList.size());
+            var filter = Filter.builder()
+                    .includeUntrusted(false)
+                    .allowQualities(Quality.HD)
+                    .build();
+
+            var infoList = manager.getTorrentInfoList(search, filter);
+            assertEquals(defaultFetchCount, infoList.size());
         } catch (TorrentEngineFailedException e) {
             e.printStackTrace();
             fail("Exception thrown");
         }
     }
 
-    @Test
-    public void goToNextPageIfEnoughResultsNotReturnedFromPage1Test() {
+    /*@Test
+    public void goToNextPageIfEnoughResultsNotFoundInPage1Test() {
         try {
             int moreThan1stPageReturns = 20 + 10;
-            var fc = new FilterCriteria(true, allQualities, moreThan1stPageReturns);
-            var infoList = manager.getTorrentInfoList(search, fc);
+            var filter = Filter.builder()
+                    .allowQualities(Quality.HD)
+                    .build();
+
+            var infoList = manager.getTorrentInfoList(search, filter);
 
             for (int i = 0; i < infoList.size(); i++)
                 System.out.println(i + 1 + ". " + infoList.get(i));
@@ -42,16 +49,17 @@ public class TorrentEngineManagerTest {
             e.printStackTrace();
             fail("Exception thrown");
         }
-    }
+    }*/
 
     @Test
-    public void infoListRestrictsResultsBasedOnQualityTest() {
+    public void gotRestrictedResultsBasedOnQualityTest() {
         try {
             String search = "Aladdin";
-            int fetchCount = 20;
             Quality allowed = Quality.HD;
-            var fc = new FilterCriteria(true, new Quality[]{allowed}, fetchCount);
-            var infoList = manager.getTorrentInfoList(search, fc);
+            var filter = Filter.builder()
+                    .allowQualities(allowed)
+                    .build();
+            var infoList = manager.getTorrentInfoList(search, filter);
             infoList.forEach(i -> {
                 System.out.println(i);
                 assertTrue(i.getQuality().equals(allowed));
@@ -65,10 +73,9 @@ public class TorrentEngineManagerTest {
     @Test
     public void resetEngineIndexWhenAllEnginesFailTest() {
         String search = "total gibberiasl;nkajkfbas";
-        int fetch = 10;
-        var fc = new FilterCriteria(true, allQualities, fetch);
+        var filter = Filter.builder().build();
         try {
-            manager.getTorrentInfoList(search, fc);
+            manager.getTorrentInfoList(search, filter);
         } catch (TorrentEngineFailedException e1) {
             assertTrue(e1.getMessage().equals("ran out of engines"));
             torrentMetaListIncludedNElementsTest();
@@ -78,8 +85,8 @@ public class TorrentEngineManagerTest {
     @Test
     public void fetchMagnetsTest() {
         try {
-            var fc = new FilterCriteria(false, allQualities, 5);
-            var infoList = manager.getTorrentInfoList(search, fc);
+            var filter = Filter.builder().build();
+            var infoList = manager.getTorrentInfoList(search, filter);
             for (var info : infoList) {
                 String mag = info.getMagnet();
                 assertNotEquals(null, mag);
