@@ -66,7 +66,7 @@ public class TorrentInfo {
         return this.torrentUrl;
     }
 
-    public String getMagnetUrl() throws TorrentEngineFailedException {
+    public String getMagnet() throws TorrentEngineFailedException {
         if (magnetUrl == null)
             magnetUrl = TorrentEngineManager
                     .getInstance(TorrentEngineSettings.getInstance())

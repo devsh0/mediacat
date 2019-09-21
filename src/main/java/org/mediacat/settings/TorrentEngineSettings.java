@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Properties;
 
 public final class TorrentEngineSettings implements Observable {
-    private static final java.lang.Object LOCK = new java.lang.Object();
+    private static final Object LOCK = new java.lang.Object();
     private static TorrentEngineSettings instance;
 
     private interface Key {
@@ -84,7 +84,7 @@ public final class TorrentEngineSettings implements Observable {
 
     private void checkImpl(String implName) {
         if (!engineImplNames.contains(implName))
-            throw new IllegalArgumentException("Engine implementation does not exist");
+            throw new IllegalArgumentException("engine implementation does not exist");
     }
 
     public boolean isProxySetFor(String impl) {

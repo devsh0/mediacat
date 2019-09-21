@@ -66,7 +66,6 @@ public class Quality {
         while (matcher.find()) {
             String match = matcher.group();
             if (match != null) {
-                System.out.println(match);
                 greatestLen = Math.max(match.length(), greatestLen);
             }
         }

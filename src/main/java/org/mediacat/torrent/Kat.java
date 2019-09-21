@@ -126,7 +126,6 @@ final class Kat implements TorrentEngine {
 
     //todo: proxy is broken
     private Document getDocument(String url) throws IOException {
-        System.out.println("Proxy: " + proxy);
         return Jsoup.connect(url)
                 .proxy(proxy)
                 .followRedirects(true)

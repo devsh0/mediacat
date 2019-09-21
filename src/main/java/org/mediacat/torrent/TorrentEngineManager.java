@@ -81,7 +81,7 @@ public class TorrentEngineManager implements Observer {
     private List<TorrentInfo> infoListHelper(TorrentEngine engine, String searchTerm, FilterCriteria fc)
             throws TorrentEngineFailedException {
         List<TorrentInfo> infos = new ArrayList<>();
-        int fetchCount = engineSettings.getFetchCount();
+        int fetchCount = fc.fetchCount;
         int page = 0;
         do {
             ++page;
@@ -92,7 +92,7 @@ public class TorrentEngineManager implements Observer {
             if (temp.isEmpty())
                 break;
 
-            // we need this many
+            // more $needed TorrentInfo required
             int needed = fetchCount - infos.size();
             int size = temp.size();
             infos.addAll(temp.subList(0, Math.min(needed, size)));
@@ -128,10 +128,6 @@ public class TorrentEngineManager implements Observer {
 
     String getMagnetOf(TorrentInfo info) throws TorrentEngineFailedException {
         synchronized (LOCK) {
-            String magnet = info.getMagnetUrl();
-            if (magnet != null && magnet.startsWith("magnet:"))
-                return magnet;
-
             String engineName = info.getEngineName();
             TorrentEngine usedEngine = engineImpls.stream()
                     .filter(e -> e.getClass()
@@ -139,7 +135,7 @@ public class TorrentEngineManager implements Observer {
                             .equals(engineName))
                     .findFirst().orElse(null);
 
-            magnet = Objects.requireNonNull(usedEngine)
+            String magnet = Objects.requireNonNull(usedEngine)
                     .getMagnet(info.getTorrentUrl());
 
             info.setMagnetUrl(magnet);
@@ -152,12 +148,11 @@ public class TorrentEngineManager implements Observer {
     }
 
     private void reset(TorrentEngineSettings settings) {
-        // reset engine settings and index
         engineSettings = settings;
         resetEngineIndex();
 
-        /* setupEngines must not be called here because we don't
-         * want to break singleton-ness of engines via reflection */
+        // setupEngines must not be called here because we don't
+        //  want to break singleton-ness of engines via reflection
         for (TorrentEngine engine : engineImpls) {
             String implName = engine.getClass().getCanonicalName();
             String baseUrl = engineSettings.getBaseUrlFor(implName);

@@ -54,7 +54,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>org.mediacat.torrentengine.org.mediacat.Main</mainClass>
+                            <mainClass>org.mediacat.torrent.org.mediacat.Main</mainClass>
                             <addClasspath>true</addClasspath>
                         </manifest>
                     </archive>
