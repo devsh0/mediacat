@@ -12,8 +12,12 @@ public class Quality {
         this.pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
     }
 
-    public boolean equals(Quality q) {
-        return this.name.equals(q.name);
+    @Override
+    public boolean equals(Object q) {
+        if (q instanceof Quality)
+            return name.equals(((Quality) q).name);
+
+        return false;
     }
 
     public String toString() {

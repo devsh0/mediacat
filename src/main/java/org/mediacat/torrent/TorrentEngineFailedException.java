@@ -5,4 +5,7 @@ public class TorrentEngineFailedException extends Exception {
         this.initCause(cause);
     }
 
+    public TorrentEngineFailedException(String message) {
+        super(message);
+    }
 }

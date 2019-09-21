@@ -11,7 +11,8 @@ import java.util.Collections;
 import java.util.List;
 
 final class Kat implements TorrentEngine {
-    private volatile static Kat instance;
+    private static final Object LOCK = new Object();
+    private static Kat instance;
 
     private interface SELECTORS {
         String DATA_ROWS_ODD = "table.data tr.odd";
@@ -79,11 +80,14 @@ final class Kat implements TorrentEngine {
         }
     }
 
-    private String baseUrl;
-    private String searchPath;
-    private Proxy proxy;
+    private final String engineName;
+    private volatile String baseUrl;
+    private volatile String searchPath;
+    private volatile Proxy proxy;
+    private volatile boolean isFailing;
 
     private Kat(String baseUrl, String searchPath, Proxy proxy) {
+        this.engineName = this.getClass().getCanonicalName();
         this.baseUrl = baseUrl;
         this.searchPath = searchPath;
         this.proxy = proxy;
@@ -115,6 +119,11 @@ final class Kat implements TorrentEngine {
         }
     }
 
+    @Override
+    public boolean isFailing() {
+        return isFailing;
+    }
+
     //todo: proxy is broken
     private Document getDocument(String url) throws IOException {
         System.out.println("Proxy: " + proxy);
@@ -138,6 +147,7 @@ final class Kat implements TorrentEngine {
     @Override
     public void setProxy(Proxy proxy) {
         this.proxy = proxy;
+
     }
 
     private String extractName(Element row) {
@@ -160,27 +170,29 @@ final class Kat implements TorrentEngine {
         return row.select(SELECTORS.TRUSTED_UPLOADED).size() > 0;
     }
 
-    private List<TorrentMeta> parseHtml(Document doc) {
-        List<TorrentMeta> metas = new ArrayList<>();
+    private List<TorrentInfo> collectTorrentInfo(Document doc) {
+        List<TorrentInfo> infoList = new ArrayList<>();
         List<Element> rows = doc.select(SELECTORS.DATA_ROWS_ODD);
         rows.addAll(doc.select(SELECTORS.DATA_ROWS_EVEN));
 
         for (Element row : rows) {
-            String name = extractName(row).replace(".", " ");
+            String torrentName = extractName(row).replace(".", " ");
             long size = Parser.parseSize(extractSimpleCellData(row, 0));
             int age = Parser.parseAge(extractSimpleCellData(row, 2));
             int seed = Parser.parseSeed(extractSimpleCellData(row, 3));
             int leech = Parser.parseLeech(extractSimpleCellData(row, 4));
             String torUrl = Parser.parseTorrentUrl(extractTorrentUrl(row));
-            String fullTorUrl = this.baseUrl + (torUrl.startsWith("/") ? "" : "/") + torUrl;
+            String fullTorUrl = baseUrl + (torUrl.startsWith("/") ? "" : "/") + torUrl;
             boolean trustedUploader = isTrustedUploader(row);
 
-            TorrentMeta meta = new TorrentMeta(name, size, age, seed, leech, fullTorUrl)
+            TorrentInfo meta = new TorrentInfo(engineName,
+                    torrentName, size, age, seed, leech, fullTorUrl)
                     .setTrustedUploader(trustedUploader);
-            metas.add(meta);
+
+            infoList.add(meta);
         }
 
-        return metas;
+        return infoList;
     }
 
     private boolean hasResults(String html) {
@@ -189,21 +201,24 @@ final class Kat implements TorrentEngine {
     }
 
     @Override
-    public List<TorrentMeta> getTorrentMeta(String searchTerm)
+    public List<TorrentInfo> getTorrentInfoList(String searchTerm, int pageNo)
             throws TorrentEngineFailedException {
         try {
-            String fullUrl = baseUrl + searchPath + searchTerm;
+            String fullUrl = baseUrl + searchPath + searchTerm + "/" + pageNo;
             Document document = getDocument(fullUrl);
-            return hasResults(document.html()) ? parseHtml(document) : Collections.emptyList();
+            return hasResults(document.html()) ?
+                    collectTorrentInfo(document) : Collections.emptyList();
         } catch (Exception e) {
+            isFailing = true;
             throw new TorrentEngineFailedException(e);
         }
     }
 
     static TorrentEngine getInstance(String baseUrl, String searchPath, Proxy proxy) {
-        if (instance == null)
-            instance = new Kat(baseUrl, searchPath, proxy);
-
+        synchronized (LOCK) {
+            if (instance == null)
+                instance = new Kat(baseUrl, searchPath, proxy);
+        }
         return instance;
     }
 }

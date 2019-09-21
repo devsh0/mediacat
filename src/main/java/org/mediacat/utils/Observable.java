@@ -1,6 +1,6 @@
 package org.mediacat.utils;
 
-public interface Object {
+public interface Observable {
     void register(Observer observer);
 
     void broadcast();

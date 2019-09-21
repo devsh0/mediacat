@@ -4,7 +4,7 @@ import java.net.Proxy;
 import java.util.List;
 
 public interface TorrentEngine {
-    List<TorrentMeta> getTorrentMeta (String searchTerm) throws TorrentEngineFailedException;
+    List<TorrentInfo> getTorrentInfoList(String searchTerm, int fromPage) throws TorrentEngineFailedException;
 
     String getBaseUrl();
 
@@ -17,6 +17,8 @@ public interface TorrentEngine {
     void setSearchPath(String searchPath);
 
     void setProxy(Proxy proxy);
+
+    boolean isFailing();
 
     default String getMagnet(String torrentUrl) throws TorrentEngineFailedException {
         throw new UnsupportedOperationException("Operation not supported");

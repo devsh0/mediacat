@@ -3,7 +3,7 @@ package org.mediacat.torrent;
 import org.mediacat.filter.Quality;
 import org.mediacat.settings.TorrentEngineSettings;
 
-public class TorrentMeta {
+public class TorrentInfo {
     private final String name;
     private final long sizeInBytes;
     private final int ageInDays;
@@ -11,15 +11,16 @@ public class TorrentMeta {
     private final int leech;
     private final String torrentUrl;
     private final Quality quality;
+    private final String engineName;
 
     private volatile boolean trustedUploader;
     private volatile String magnetUrl;
-    private volatile String engineName;
 
-    TorrentMeta(String name, long sizeInBytes, int ageInDays, int seed,
+    TorrentInfo(String engineName, String torrentName, long sizeInBytes, int ageInDays, int seed,
                 int leech, String torrentUrl) {
-        this.name = name;
-        this.quality = Quality.fromName(name);
+        this.engineName = engineName;
+        this.name = torrentName;
+        this.quality = Quality.fromName(torrentName);
         this.sizeInBytes = sizeInBytes;
         this.ageInDays = ageInDays;
         this.seed = seed;
@@ -27,9 +28,9 @@ public class TorrentMeta {
         this.torrentUrl = torrentUrl;
     }
 
-    TorrentMeta(String name, long sizeInBytes, int ageInDays, int seed, int leech,
-                String torrentUrl, String magnetUrl) {
-        this(name, sizeInBytes, ageInDays, seed, leech, torrentUrl);
+    TorrentInfo(String engineName, String torrentName, long sizeInBytes, int ageInDays,
+                int seed, int leech, String torrentUrl, String magnetUrl) {
+        this(engineName, torrentName, sizeInBytes, ageInDays, seed, leech, torrentUrl);
         this.magnetUrl = magnetUrl;
     }
 
@@ -57,7 +58,7 @@ public class TorrentMeta {
         return quality;
     }
 
-    public boolean isTrustedUploader() {
+    public boolean byTrustedUploader() {
         return trustedUploader;
     }
 
@@ -77,17 +78,12 @@ public class TorrentMeta {
         return this.engineName;
     }
 
-    public TorrentMeta setMagnetUrl(String magnetUrl) {
+    public TorrentInfo setMagnetUrl(String magnetUrl) {
         this.magnetUrl = magnetUrl;
         return this;
     }
 
-    public TorrentMeta setEngineName(String name) {
-        this.engineName = name;
-        return this;
-    }
-
-    public TorrentMeta setTrustedUploader(boolean b) {
+    public TorrentInfo setTrustedUploader(boolean b) {
         trustedUploader = b;
         return this;
     }
@@ -105,7 +101,7 @@ public class TorrentMeta {
                 "]";
     }
 
-    public boolean equals(TorrentMeta meta) {
+    public boolean equals(TorrentInfo meta) {
         return this.torrentUrl.equals(meta.torrentUrl);
     }
 }

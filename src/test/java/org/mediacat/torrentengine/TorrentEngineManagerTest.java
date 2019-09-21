@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mediacat.settings.TorrentEngineSettings;
 import org.mediacat.torrent.TorrentEngineFailedException;
 import org.mediacat.torrent.TorrentEngineManager;
-import org.mediacat.torrent.TorrentMeta;
+import org.mediacat.torrent.TorrentInfo;
 
 import java.util.List;
 
@@ -16,12 +16,12 @@ public class TorrentEngineManagerTest {
     private final String filePath = "src/main/resources/torrentengine.settings.properties";
     private final TorrentEngineSettings settings = TorrentEngineSettings.getInstance(filePath);
     private final TorrentEngineManager instance = TorrentEngineManager.getInstance(settings);
-    private List<TorrentMeta> metas;
+    private List<TorrentInfo> metas;
 
     @BeforeEach
     public void setUp() {
         String searchTerm = "Mirzapur";
-        metas = instance.getTorrentMeta(searchTerm);
+        metas = instance.getTorrentInfoList(searchTerm);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class TorrentEngineManagerTest {
 
     @Test
     public void testMagnetLinkFetched() {
-        TorrentMeta meta = metas.get(0);
+        TorrentInfo meta = metas.get(0);
         try {
             instance.getMagnetOf(meta);
         } catch (TorrentEngineFailedException e) {

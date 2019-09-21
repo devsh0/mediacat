@@ -1,6 +1,6 @@
 package org.mediacat.settings;
 
-import org.mediacat.utils.Object;
+import org.mediacat.utils.Observable;
 import org.mediacat.utils.Observer;
 
 import java.io.IOException;
@@ -15,20 +15,21 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-public final class TorrentEngineSettings implements Object {
+public final class TorrentEngineSettings implements Observable {
     private static final java.lang.Object LOCK = new java.lang.Object();
     private static TorrentEngineSettings instance;
 
     private interface Key {
-        String impls = "org.mediacat.torrentengine.impls";
+        String impls = "org.mediacat.torrent.impls";
+        String fetchCount = "org.mediacat.torrent.fetchCount";
 
         // settings that apply to all engines
         interface global {
             interface proxy {
-                String isSet = "org.mediacat.torrentengine.*.proxy.isSet";
-                String type = "org.mediacat.torrentengine.*.proxy.type";
-                String host = "org.mediacat.torrentengine.*.proxy.host";
-                String port = "org.mediacat.torrentengine.*.proxy.port";
+                String isSet = "org.mediacat.torrent.*.proxy.isSet";
+                String type = "org.mediacat.torrent.*.proxy.type";
+                String host = "org.mediacat.torrent.*.proxy.host";
+                String port = "org.mediacat.torrent.*.proxy.port";
             }
         }
 
@@ -137,6 +138,12 @@ public final class TorrentEngineSettings implements Object {
     public List<String> getEngineImplNames() {
         synchronized (LOCK) {
             return new ArrayList<>(engineImplNames);
+        }
+    }
+
+    public int getFetchCount() {
+        synchronized (LOCK) {
+            return Integer.parseInt(props.getProperty(Key.fetchCount));
         }
     }
 

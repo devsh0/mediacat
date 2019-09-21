@@ -1,6 +1,6 @@
 module org.mediacat {
-    requires org.jsoup;
-    requires jdk.crypto.ec;
+    requires transitive org.jsoup;
+    requires transitive jdk.crypto.ec;
     exports org.mediacat.torrent;
     exports org.mediacat.settings;
     exports org.mediacat.utils;
