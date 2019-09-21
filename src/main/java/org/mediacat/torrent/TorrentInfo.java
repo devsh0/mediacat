@@ -3,7 +3,7 @@ package org.mediacat.torrent;
 import org.mediacat.filter.Quality;
 import org.mediacat.settings.TorrentEngineSettings;
 
-public class TorrentInfo {
+public class TorrentInfo implements Comparable<TorrentInfo> {
     private final String name;
     private final long sizeInBytes;
     private final int ageInDays;
@@ -103,5 +103,11 @@ public class TorrentInfo {
 
     public boolean equals(TorrentInfo meta) {
         return this.torrentUrl.equals(meta.torrentUrl);
+    }
+
+    @Override
+    public int compareTo(TorrentInfo o) {
+        // sort by seed in descending order
+        return o.getSeed() - seed;
     }
 }

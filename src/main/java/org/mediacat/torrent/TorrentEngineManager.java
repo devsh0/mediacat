@@ -8,6 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.Proxy;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -109,7 +110,7 @@ public class TorrentEngineManager implements Observer {
                 }
             } while (infoList.isEmpty());
 
-            // todo: sort the infoList
+            Collections.sort(infoList);
             return infoList;
         }
     }
