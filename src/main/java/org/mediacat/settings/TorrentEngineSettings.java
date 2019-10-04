@@ -5,6 +5,7 @@ import org.mediacat.utils.Observer;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.nio.file.Files;
@@ -129,10 +130,28 @@ final public class TorrentEngineSettings implements Observable {
         }
     }
 
+    public TorrentEngineSettings setBaseUrlFor(String impl, String url) {
+        synchronized (LOCK) {
+            checkImpl(impl);
+            props.setProperty(impl + Key.engine.url, url);
+            broadcast();
+            return this;
+        }
+    }
+
     public String getSearchPathFor(String impl) {
         synchronized (LOCK) {
             checkImpl(impl);
             return props.getProperty(impl + Key.engine.searchPath);
+        }
+    }
+
+    public TorrentEngineSettings setSearchPathFor(String impl, String path) {
+        synchronized (LOCK) {
+            checkImpl(impl);
+            props.setProperty(impl + Key.engine.searchPath, path);
+            broadcast();
+            return this;
         }
     }
 
@@ -146,6 +165,24 @@ final public class TorrentEngineSettings implements Observable {
         synchronized (LOCK) {
             return Integer.parseInt(props.getProperty(Key.fetchCount));
         }
+    }
+
+    public TorrentEngineSettings setFetchCount(int fetchCount) {
+        synchronized (LOCK) {
+            props.setProperty(Key.fetchCount, fetchCount + "");
+            broadcast();
+            return this;
+        }
+    }
+
+    public TorrentEngineSettings saveCurrentAsDefault(OutputStream os) {
+        try {
+            props.store(os, "");
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return this;
     }
 
     @Override

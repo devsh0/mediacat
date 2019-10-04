@@ -143,7 +143,7 @@ final public class TorrentEngineManager implements Observer {
 
     private void reset(TorrentEngineSettings settings) {
         engineSettings = settings;
-        resetEngineIndex();
+        //resetEngineIndex();
 
         // setupEngines must not be called here because we don't
         //  want to break singleton-ness of engines via reflection

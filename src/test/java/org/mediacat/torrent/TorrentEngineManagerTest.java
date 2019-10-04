@@ -16,7 +16,7 @@ public class TorrentEngineManagerTest {
     private final int defaultFetchCount = 20;
 
     @Test
-    public void torrentMetaListIncludedNElementsTest() {
+    public void torrentMetaListContainsNElementsTest() {
         try {
             var filter = Filter.builder()
                     .includeUntrusted(false)
@@ -62,7 +62,7 @@ public class TorrentEngineManagerTest {
             var infoList = manager.getTorrentInfoList(search, filter);
             infoList.forEach(i -> {
                 System.out.println(i);
-                assertTrue(i.getQuality().equals(allowed));
+                assertEquals(i.getQuality(), allowed);
             });
         } catch (TorrentEngineFailedException e) {
             e.printStackTrace();
@@ -77,8 +77,8 @@ public class TorrentEngineManagerTest {
         try {
             manager.getTorrentInfoList(search, filter);
         } catch (TorrentEngineFailedException e1) {
-            assertTrue(e1.getMessage().equals("ran out of engines"));
-            torrentMetaListIncludedNElementsTest();
+            assertEquals("ran out of engines", e1.getMessage());
+            torrentMetaListContainsNElementsTest();
         }
     }
 
