@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Properties;
 
 // todo: make ports to edit settings
-public final class TorrentEngineSettings implements Observable {
+final public class TorrentEngineSettings implements Observable {
     private static final Object LOCK = new java.lang.Object();
     private static TorrentEngineSettings instance;
 

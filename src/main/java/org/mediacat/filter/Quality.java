@@ -3,7 +3,7 @@ package org.mediacat.filter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Quality {
+final public class Quality {
     private final String name;
     private final Pattern pattern;
 

@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class TorrentEngineManager implements Observer {
+final public class TorrentEngineManager implements Observer {
     private static final java.lang.Object LOCK = new java.lang.Object();
     private static TorrentEngineManager instance;
 
@@ -91,42 +91,47 @@ public class TorrentEngineManager implements Observer {
     public List<TorrentInfo> getTorrentInfoList(String searchTerm, Filter filter)
             throws TorrentEngineFailedException {
         synchronized (LOCK) {
-            List<TorrentInfo> infoList;
             var engine = getCurrentEngine();
+            List<TorrentInfo> infoList = infoListHelper(engine, searchTerm, filter);
+            ;
             int activeEngine = engineIndex;
 
-            do {
-                infoList = infoListHelper(engine, searchTerm, filter);
-                if (infoList.isEmpty()) {
-                    try {
-                        engine = incrementIndexAndGetEngine();
-                    } catch (TorrentEngineFailedException e) {
-                        // since all the engines have failed and engineIndex
-                        //  is in an invalid state, we reset the index where it
-                        //  was before processing this search
-                        engineIndex = activeEngine;
-                        throw e;
-                    }
+            while (infoList.isEmpty()) {
+                try {
+                    engine = incrementIndexAndGetEngine();
+                    infoList = infoListHelper(engine, searchTerm, filter);
+                } catch (TorrentEngineFailedException e) {
+                    // since all the engines have failed and engineIndex
+                    //  is in an invalid state, we reset the index where it
+                    //  was before processing this search
+                    engineIndex = activeEngine;
+                    throw e;
                 }
-            } while (infoList.isEmpty());
+            }
 
             Collections.sort(infoList);
             return infoList;
         }
     }
 
+    private TorrentEngine getUsedEngine(TorrentInfo info) {
+        String engineName = info.getEngineName();
+        var usedEngine = engineImpls.stream()
+                .filter(e -> e.getClass()
+                        .getCanonicalName()
+                        .equals(engineName))
+                .findFirst().orElse(null);
+
+        return Objects.requireNonNull(usedEngine);
+    }
+
     String getMagnetOf(TorrentInfo info) throws TorrentEngineFailedException {
+        // Some websites don't expose magnet urls in search results
+        //  This is a helper method that is invoked by TorrentInfo class
+        //  when the magnet is finally queried
         synchronized (LOCK) {
-            String engineName = info.getEngineName();
-            TorrentEngine usedEngine = engineImpls.stream()
-                    .filter(e -> e.getClass()
-                            .getCanonicalName()
-                            .equals(engineName))
-                    .findFirst().orElse(null);
-
-            String magnet = Objects.requireNonNull(usedEngine)
-                    .getMagnet(info.getTorrentUrl());
-
+            TorrentEngine usedEngine = getUsedEngine(info);
+            String magnet = usedEngine.getMagnet(info.getTorrentUrl());
             info.setMagnetUrl(magnet);
             return magnet;
         }
