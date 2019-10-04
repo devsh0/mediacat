@@ -93,7 +93,7 @@ public class TorrentEngineManager implements Observer {
         synchronized (LOCK) {
             List<TorrentInfo> infoList;
             var engine = getCurrentEngine();
-            int workingEngine = engineIndex;
+            int activeEngine = engineIndex;
 
             do {
                 infoList = infoListHelper(engine, searchTerm, filter);
@@ -104,7 +104,7 @@ public class TorrentEngineManager implements Observer {
                         // since all the engines have failed and engineIndex
                         //  is in an invalid state, we reset the index where it
                         //  was before processing this search
-                        engineIndex = workingEngine;
+                        engineIndex = activeEngine;
                         throw e;
                     }
                 }
