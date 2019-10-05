@@ -40,13 +40,13 @@ public class TorrentEngineSettingsTest {
 
     @Test
     public void saveSettingsTest() {
-        assertTrue(settings.getFetchCount() < 100);
-        settings.setFetchCount(100);
+        int newFetchCount = 5;
+        settings.setFetchCount(newFetchCount);
         Path p = Paths.get(path);
 
         try (var os = Files.newOutputStream(p)) {
             settings.saveCurrentAsDefault(os);
-            assertEquals(100, settings.getFetchCount());
+            assertEquals(newFetchCount, settings.getFetchCount());
         } catch (IOException exc) {
             exc.printStackTrace();
             fail();

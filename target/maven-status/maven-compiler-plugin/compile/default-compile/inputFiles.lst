@@ -1,0 +1,12 @@
+G:\mediacat\src\main\java\module-info.java
+G:\mediacat\src\main\java\org\mediacat\utils\Observer.java
+G:\mediacat\src\main\java\org\mediacat\settings\AppSettings.java
+G:\mediacat\src\main\java\org\mediacat\settings\TorrentEngineSettings.java
+G:\mediacat\src\main\java\org\mediacat\torrent\TorrentEngineManager.java
+G:\mediacat\src\main\java\org\mediacat\filter\Filter.java
+G:\mediacat\src\main\java\org\mediacat\torrent\TorrentEngineFailedException.java
+G:\mediacat\src\main\java\org\mediacat\torrent\TorrentEngine.java
+G:\mediacat\src\main\java\org\mediacat\utils\Observable.java
+G:\mediacat\src\main\java\org\mediacat\filter\Quality.java
+G:\mediacat\src\main\java\org\mediacat\torrent\Kat.java
+G:\mediacat\src\main\java\org\mediacat\torrent\TorrentInfo.java
