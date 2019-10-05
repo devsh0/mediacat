@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TorrentEngineSettingsTest {
     private final String path = "src/main/resources/torrent.settings.properties";
     private final TorrentEngineSettings settings = TorrentEngineSettings.getInstance(path);
+    private final int fetchCount = 5;
 
     @Test
     public void loadSettingsTest() {
@@ -29,8 +30,8 @@ public class TorrentEngineSettingsTest {
             Filter filter = Filter.builder().build();
             int infoListSize = manager.getTorrentInfoList("Friends", filter).size();
             assertEquals(infoListSize, fetchCount);
-            settings.setFetchCount(40);
-            assertEquals(40, manager.getTorrentInfoList("Breaking bad", filter).size());
+            settings.setFetchCount(fetchCount + 1);
+            assertEquals(fetchCount + 1, manager.getTorrentInfoList("Breaking bad", filter).size());
 
         } catch (TorrentEngineFailedException exc) {
             exc.printStackTrace();
@@ -40,13 +41,12 @@ public class TorrentEngineSettingsTest {
 
     @Test
     public void saveSettingsTest() {
-        int newFetchCount = 5;
-        settings.setFetchCount(newFetchCount);
+        settings.setFetchCount(fetchCount);
         Path p = Paths.get(path);
 
         try (var os = Files.newOutputStream(p)) {
             settings.saveCurrentAsDefault(os);
-            assertEquals(newFetchCount, settings.getFetchCount());
+            assertEquals(fetchCount, settings.getFetchCount());
         } catch (IOException exc) {
             exc.printStackTrace();
             fail();
