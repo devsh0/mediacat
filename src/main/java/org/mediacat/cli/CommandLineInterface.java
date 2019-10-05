@@ -38,7 +38,9 @@ public class CommandLineInterface {
         if(params.includeBluray)
             qualityList.add(Quality.BLURAY);
 
-        return (Quality[])qualityList.toArray();
+        Quality[] qualities = new Quality[qualityList.size()];
+        qualityList.toArray(qualities);
+        return qualities;
     }
 
     public static void main(String[] args) throws TorrentEngineFailedException {
