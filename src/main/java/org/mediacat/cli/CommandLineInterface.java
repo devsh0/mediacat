@@ -1,20 +1,51 @@
 package org.mediacat.cli;
 
+import org.mediacat.filter.Filter;
+import org.mediacat.filter.Quality;
+import org.mediacat.settings.TorrentEngineSettings;
+import org.mediacat.torrent.TorrentEngineFailedException;
+import org.mediacat.torrent.TorrentEngineManager;
+import org.mediacat.torrent.TorrentInfo;
 import picocli.CommandLine;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CommandLineInterface {
-    public static void main(String[] args) {
+    private static final String engineSettingsFile = "configs/torrent.settings.properties";
+
+    private static List<TorrentInfo> getTorrents(CmdParameters params)
+            throws TorrentEngineFailedException {
+        TorrentEngineSettings settings = TorrentEngineSettings.getInstance(engineSettingsFile);
+        TorrentEngineManager manager = TorrentEngineManager.getInstance(settings);
+        settings.setFetchCount(params.fetchCount);
+
+        Quality[] allowedQualities = getQualitiesInArray(params);
+        Filter filter = Filter.builder()
+                .includeUntrusted(params.allowUntrusted)
+                .allowQualities(allowedQualities)
+                .build();
+
+        return manager.getTorrentInfoList(params.searchTerm, filter);
+    }
+
+    private static Quality[] getQualitiesInArray (CmdParameters params) {
+        List<Quality> qualityList = new ArrayList<>();
+        if (params.includeTheatre)
+            qualityList.add(Quality.THEATRE);
+        if (params.includeHd)
+            qualityList.add(Quality.HD);
+        if(params.includeBluray)
+            qualityList.add(Quality.BLURAY);
+
+        return (Quality[])qualityList.toArray();
+    }
+
+    public static void main(String[] args) throws TorrentEngineFailedException {
         CmdParameters params = new CmdParameters();
         new CommandLine(params).parseArgs(args);
         params.wrapUp();
-
-        System.out.println("search term: " + params.searchTerm);
-        System.out.println("fetch count: " + params.fetchCount);
-        System.out.println("includes theatre: " + params.includeTheatre);
-        System.out.println("includes hd: " + params.includeHd);
-        System.out.println("includes bluray: " + params.includeBluray);
-        System.out.println("magnet only: " + params.magnetOnly);
-        System.out.println("best only: " + params.best);
-        System.out.println("save as default: " + params.saveAsDefault);
+        var infoList = getTorrents(params);
+        new OutputFormatter(params, infoList).print();
     }
 }

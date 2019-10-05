@@ -41,12 +41,6 @@ public class CmdParameters {
     int fetchCount = 5;
 
     @Option(
-            names = {"-s", "--save"},
-            description = "Optional. Save the specified settings as default."
-    )
-    boolean saveAsDefault;
-
-    @Option(
             names = {"-m", "--magnet-only"},
             description = "Optional. If specified, only the magnet urls will be sent" +
                     " to standard output. Set to false by default. This option is" +
@@ -62,6 +56,14 @@ public class CmdParameters {
                     " to standard output."
     )
     boolean best;
+
+    @Option(
+            names = {"-u", "--allow-untrusted"},
+            description = "Optional. If specified, torrents uploaded by untrusted (non-vpi)" +
+                    " members will be included. Depending on the torrent engine being used," +
+                    " this option may not have any effect in the search results returned."
+    )
+    boolean allowUntrusted;
 
     public void wrapUp() {
         if (!includeBluray && !includeHd && !includeTheatre)

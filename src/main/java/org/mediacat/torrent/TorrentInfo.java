@@ -90,15 +90,13 @@ public class TorrentInfo implements Comparable<TorrentInfo> {
 
     @Override
     public String toString() {
-        return "[" +
-                "Name: " + this.name + ", " +
-                "Size: " + this.sizeInBytes + " bytes, " +
-                "Age: " + this.ageInDays + " days, " +
-                "Seed: " + this.seed + ", " +
-                "Leech: " + this.leech + ", " +
-                "URL: " + this.torrentUrl + ", " +
-                "Magnet: " + this.magnetUrl +
-                "]";
+        return "Name: " + this.name + "\n" +
+                "Size: " + this.sizeInBytes + " bytes\n" +
+                "Age: " + this.ageInDays + " days\n" +
+                "Seed: " + this.seed + "\n" +
+                "Leech: " + this.leech + "\n" +
+                "URL: " + this.torrentUrl + "\n" +
+                "Magnet: " + this.magnetUrl + "\n";
     }
 
     public boolean equals(TorrentInfo meta) {
