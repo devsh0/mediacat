@@ -1,0 +1,4 @@
+--patch-module
+org.mediacat=_
+--add-reads
+org.mediacat=ALL-UNNAMED

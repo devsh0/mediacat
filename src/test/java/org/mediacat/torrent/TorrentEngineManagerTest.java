@@ -13,7 +13,7 @@ public class TorrentEngineManagerTest {
     private final TorrentEngineManager manager = TorrentEngineManager.getInstance(settings);
     private final Quality[] allQualities = new Quality[]{Quality.THEATRE, Quality.HD, Quality.BLURAY};
     private final String search = "Game of Thrones";
-    private final int defaultFetchCount = 20;
+    private final int defaultFetchCount = 5;
 
     @Test
     public void torrentMetaListContainsNElementsTest() {

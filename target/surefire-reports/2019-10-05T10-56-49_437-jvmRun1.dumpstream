@@ -1,0 +1,200 @@
+# Created at 2019-10-05T10:57:40.009
+TestSet has not finished before stream error has appeared >> initializing exit by non-null configuration: null
+java.io.EOFException
+	at java.base/java.io.DataInputStream.readInt(DataInputStream.java:397)
+	at org.apache.maven.surefire.booter.MasterProcessCommand.decode(MasterProcessCommand.java:115)
+	at org.apache.maven.surefire.booter.CommandReader$CommandRunnable.run(CommandReader.java:390)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+
+
+# Created at 2019-10-05T10:57:40.395
+Unexpected IOException with stream: [Name: Game of Thrones S08E05 1080p AMZN WEB-DL 6CH 1 5GB - MkvCage, Size: 1600000000 bytes, Age: 120 days, Seed: 4790, Leech: 4600, URL: https://kickasstorrents.to/game-of-thrones-s08e05-1080p-amzn-web-dl-6ch-1-5gb-mkvcage-t3755207.html, Magnet: magnet:?xt=urn:btih:092EBCDF6FBF78D42FA7958C364E271B961A0E15&dn=Game+of+Thrones+S08E05+1080p+AMZN+WEB-DL+6CH+1.5GB+-+MkvCage&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.ilibr.org%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.ilibr.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.com%3A1337%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.ch%3A1337%2Fannounce&tr=udp%3A%2F%2Fipv4.tracker.harry.lu%3A80%2Fannounce&tr=udp%3A%2F%2Fexplodie.org%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce&tr=udp%3A%2F%2F9.rarbg.com%3A2710%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2Feddie4.nl%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce]
+
+# Created at 2019-10-05T10:57:40.398
+Unexpected IOException with stream: 
+
+
+# Created at 2019-10-05T10:57:41.034
+Unexpected IOException with stream: [Name: Game of Thrones S08E05 720p WEB H264-MEMENTO eztv, Size: 2700000000 bytes, Age: 120 days, Seed: 4788, Leech: 523, URL: https://kickasstorrents.to/game-of-thrones-s08e05-720p-web-h264-memento-eztv-t3755117.html, Magnet: magnet:?xt=urn:btih:F7062E1D721E87D025C906D92C08A43C52349C93&dn=Game+of+Thrones+S08E05+720p+WEB+H264-MEMENTO+%5Beztv%5D&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftorrent.gresille.org%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.com%3A1337&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce]
+
+# Created at 2019-10-05T10:57:41.038
+Unexpected IOException with stream: 
+
+
+# Created at 2019-10-05T10:57:41.676
+Unexpected IOException with stream: [Name: Game of Thrones S08E03 WEB H264-MEMENTO eztv, Size: 524000000 bytes, Age: 150 days, Seed: 4667, Leech: 2200, URL: https://kickasstorrents.to/game-of-thrones-s08e03-web-h264-memento-eztv-t3727272.html, Magnet: magnet:?xt=urn:btih:AC73EC585C0042187446CE3B0713285BCE0BFE2B&dn=Game+of+Thrones+S08E03+WEB+H264-MEMENTO+%5Beztv%5D&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftorrent.gresille.org%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.com%3A1337&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce]
+
+# Created at 2019-10-05T10:57:41.681
+Unexpected IOException with stream: 
+
+
+# Created at 2019-10-05T10:57:42.314
+Unexpected IOException with stream: [Name: Game of Thrones S08E02 1080p AMZN WEB-DL DDP5 1 H 264-GoT, Size: 3000000000 bytes, Age: 150 days, Seed: 4625, Leech: 5770, URL: https://kickasstorrents.to/game-of-thrones-s08e02-1080p-amzn-web-dl-ddp5-1-h-264-got-t3716339.html, Magnet: magnet:?xt=urn:btih:29BA86ECEF5096EE70026E05E53320E28773765D&dn=Game.of.Thrones.S08E02.1080p.AMZN.WEB-DL.DDP5.1.H.264-GoT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce]
+
+# Created at 2019-10-05T10:57:42.319
+Unexpected IOException with stream: 
+
+
+# Created at 2019-10-05T10:57:42.956
+Unexpected IOException with stream: [Name: Game of Thrones S08E03 720p AMZN WEB-DL DDP5 1 H 264-GoT eztv, Size: 2000000000 bytes, Age: 150 days, Seed: 4519, Leech: 831, URL: https://kickasstorrents.to/game-of-thrones-s08e03-720p-amzn-web-dl-ddp5-1-h-264-got-eztv-t3727313.html, Magnet: magnet:?xt=urn:btih:D003011C40FA8ED4C3246EA3842A4AE1B083780D&dn=Game+of+Thrones+S08E03+720p+AMZN+WEB-DL+DDP5+1+H+264-GoT+%5Beztv%5D&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftorrent.gresille.org%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.com%3A1337&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce]
+
+# Created at 2019-10-05T10:57:42.962
+Unexpected IOException with stream: 
+
+
+# Created at 2019-10-05T10:57:43.596
+Unexpected IOException with stream: [Name: Game of Thrones S08E05 WEB H264-MEMENTO, Size: 626500000 bytes, Age: 120 days, Seed: 4495, Leech: 392, URL: https://kickasstorrents.to/game-of-thrones-s08e05-web-h264-memento-t3755077.html, Magnet: magnet:?xt=urn:btih:C263229BA8ECC9212ABA8A052D5F232993AD6080&dn=Game.of.Thrones.S08E05.WEB.H264-MEMENTO&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2730%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2790%2Fannounce&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce]
+
+# Created at 2019-10-05T10:57:43.602
+Unexpected IOException with stream: 
+
+
+# Created at 2019-10-05T10:57:44.235
+Unexpected IOException with stream: [Name: Game of Thrones S08E05 WEBRip x264-ION10, Size: 774800000 bytes, Age: 120 days, Seed: 4423, Leech: 472, URL: https://kickasstorrents.to/game-of-thrones-s08e05-webrip-x264-ion10-t3755139.html, Magnet: magnet:?xt=urn:btih:89CFD5489FA578C5704CA35BD69D7647715B3B09&dn=Game.of.Thrones.S08E05.WEBRip.x264-ION10&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2740%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2790%2Fannounce&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce]
+
+# Created at 2019-10-05T10:57:44.239
+Unexpected IOException with stream: 
+
+
+# Created at 2019-10-05T10:57:44.872
+Unexpected IOException with stream: [Name: Game of Thrones S08E01 REPACK WEB H264-MEMENTO, Size: 350400000 bytes, Age: 150 days, Seed: 3925, Leech: 480, URL: https://kickasstorrents.to/game-of-thrones-s08e01-repack-web-h264-memento-t3705377.html, Magnet: magnet:?xt=urn:btih:A2BB64D9F18F06117BDB519BA1726162F0B26579&dn=Game.of.Thrones.S08E01.REPACK.WEB.H264-MEMENTO&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce]
+
+# Created at 2019-10-05T10:57:44.876
+Unexpected IOException with stream: 
+
+
+# Created at 2019-10-05T10:57:45.512
+Unexpected IOException with stream: [Name: Game of Thrones S08E06 WEB H264-MEMENTO eztv, Size: 396400000 bytes, Age: 120 days, Seed: 3887, Leech: 524, URL: https://kickasstorrents.to/game-of-thrones-s08e06-web-h264-memento-eztv-t3769741.html, Magnet: magnet:?xt=urn:btih:0F63E5835F202CAF81FD1B54BC706D21727D6C62&dn=Game+of+Thrones+S08E06+WEB+H264-MEMENTO+%5Beztv%5D&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftorrent.gresille.org%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.com%3A1337&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce]
+
+# Created at 2019-10-05T10:57:45.515
+Unexpected IOException with stream: 
+
+
+# Created at 2019-10-05T10:57:46.153
+Unexpected IOException with stream: [Name: Game of Thrones S08E03 720p WEB H264-MEMENTO, Size: 2300000000 bytes, Age: 150 days, Seed: 3864, Leech: 423, URL: https://kickasstorrents.to/game-of-thrones-s08e03-720p-web-h264-memento-t3727258.html, Magnet: magnet:?xt=urn:btih:3333A66E7DAAB1D903F5F7B2F9F84EF379F34D19&dn=Game.of.Thrones.S08E03.720p.WEB.H264-MEMENTO&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2750%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2760%2Fannounce&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce]
+
+# Created at 2019-10-05T10:57:46.157
+Unexpected IOException with stream: 
+
+
+# Created at 2019-10-05T10:57:46.799
+Unexpected IOException with stream: [Name: Game of Thrones S08E01 WEB H264-MEMENTO eztv, Size: 365500000 bytes, Age: 150 days, Seed: 3829, Leech: 229, URL: https://kickasstorrents.to/game-of-thrones-s08e01-web-h264-memento-eztv-t3705350.html, Magnet: magnet:?xt=urn:btih:EDB724BCEDBC036467A6422234267C95EC55394E&dn=Game+of+Thrones+S08E01+WEB+H264-MEMENTO+%5Beztv%5D&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftorrent.gresille.org%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.com%3A1337&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce]
+
+# Created at 2019-10-05T10:57:46.804
+Unexpected IOException with stream: 
+
+
+# Created at 2019-10-05T10:57:47.437
+Unexpected IOException with stream: [Name: Game of Thrones S08E01 1080p WEB H264-MEMENTO, Size: 3300000000 bytes, Age: 150 days, Seed: 3779, Leech: 592, URL: https://kickasstorrents.to/game-of-thrones-s08e01-1080p-web-h264-memento-t3705345.html, Magnet: magnet:?xt=urn:btih:E7BC9D5737BFE9E4BD50F596D64347AF4EDFB9A5&dn=Game.of.Thrones.S08E01.1080p.WEB.H264-MEMENTO&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce]
+
+# Created at 2019-10-05T10:57:47.441
+Unexpected IOException with stream: 
+
+
+# Created at 2019-10-05T10:57:48.394
+Unexpected IOException with stream: [Name: Game of Thrones S08E04 1080p AMZN WEB-DL 6CH 1 5GB - MkvCage, Size: 1500000000 bytes, Age: 150 days, Seed: 3579, Leech: 2988, URL: https://kickasstorrents.to/game-of-thrones-s08e04-1080p-amzn-web-dl-6ch-1-5gb-mkvcage-t3740791.html, Magnet: magnet:?xt=urn:btih:A3FFE4084930E1BD624DD5268E9CD156152CDD74&dn=Game+of+Thrones+S08E04+1080p+AMZN+WEB-DL+6CH+1.5GB+-+MkvCage&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.ilibr.org%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.ilibr.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.com%3A1337%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.ch%3A1337%2Fannounce&tr=udp%3A%2F%2Fipv4.tracker.harry.lu%3A80%2Fannounce&tr=udp%3A%2F%2Fexplodie.org%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce&tr=udp%3A%2F%2F9.rarbg.com%3A2710%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2Feddie4.nl%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce]
+
+# Created at 2019-10-05T10:57:48.400
+Unexpected IOException with stream: 
+
+
+# Created at 2019-10-05T10:57:49.033
+Unexpected IOException with stream: [Name: Game of Thrones S08E02 720p AMZN WEB-DL DDP5 1 H 264-GoT, Size: 1300000000 bytes, Age: 150 days, Seed: 3567, Leech: 594, URL: https://kickasstorrents.to/game-of-thrones-s08e02-720p-amzn-web-dl-ddp5-1-h-264-got-t3716336.html, Magnet: magnet:?xt=urn:btih:22998D12565C2EB9F7291DF7FBFA9196405B0939&dn=Game.of.Thrones.S08E02.720p.AMZN.WEB-DL.DDP5.1.H.264-GoT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce]
+
+# Created at 2019-10-05T10:57:49.037
+Unexpected IOException with stream: 
+
+
+# Created at 2019-10-05T10:57:49.675
+Unexpected IOException with stream: [Name: Game of Thrones S08E04 WEB H264-MEMENTO, Size: 546600000 bytes, Age: 150 days, Seed: 3380, Leech: 333, URL: https://kickasstorrents.to/game-of-thrones-s08e04-web-h264-memento-t3740710.html, Magnet: magnet:?xt=urn:btih:8334E77373C1F4BD570089C4570C7595CF0CD5C3&dn=Game.of.Thrones.S08E04.WEB.H264-MEMENTO&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2790%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2750%2Fannounce&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce]
+
+# Created at 2019-10-05T10:57:49.679
+Unexpected IOException with stream: 
+
+
+# Created at 2019-10-05T10:57:50.327
+Unexpected IOException with stream: [Name: Game of Thrones S08E03 720p WEB x265-MiNX TGx, Size: 415100000 bytes, Age: 150 days, Seed: 3332, Leech: 410, URL: https://kickasstorrents.to/game-of-thrones-s08e03-720p-web-x265-minx-tgx-t3727354.html, Magnet: magnet:?xt=urn:btih:D0E1334B54F9CF0CAA8F177AFDF150CD845AB4E2&dn=Game.of.Thrones.S08E03.720p.WEB.x265-MiNX%5BTGx%5D&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fexodus.desync.com%3A6969&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Fexplodie.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.tiny-vps.com%3A6969%2Fannounce&tr=udp%3A%2F%2Fopen.demonii.si%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.torrent.eu.org%3A451%2Fannounce&tr=udp%3A%2F%2Ftracker.pirateparty.gr%3A6969%2Fannounce&tr=udp%3A%2F%2Fipv4.tracker.harry.lu%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.cyberia.is%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce]
+
+# Created at 2019-10-05T10:57:50.362
+Unexpected IOException with stream: 
+
+
+# Created at 2019-10-05T10:57:51.032
+Unexpected IOException with stream: [Name: Game of Thrones S08E05 720p WEB H264-MEMENTO ettv, Size: 2700000000 bytes, Age: 120 days, Seed: 3216, Leech: 400, URL: https://kickasstorrents.to/game-of-thrones-s08e05-720p-web-h264-memento-ettv-t3755091.html, Magnet: magnet:?xt=urn:btih:8A7B50E59E1736C7FCFBE4E3C635DD9A617E1BA8&dn=Game.of.Thrones.S08E05.720p.WEB.H264-MEMENTO%5Bettv%5D&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.pirateparty.gr%3A6969%2Fannounce&tr=udp%3A%2F%2Fexodus.desync.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.torrent.eu.org%3A451&tr=udp%3A%2F%2Ftracker.cyberia.is%3A6969%2Fannounce&tr=udp%3A%2F%2Fopen.demonii.si%3A1337%2Fannounce&tr=udp%3A%2F%2Fopen.stealth.si%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.tiny-vps.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.iamhansen.xyz%3A2000%2Fannounce&tr=udp%3A%2F%2Fexplodie.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fdenis.stalker.upeer.me%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce]
+
+# Created at 2019-10-05T10:57:51.037
+Unexpected IOException with stream: 
+
+
+# Created at 2019-10-05T10:57:51.593
+Unexpected IOException with stream: [Name: Game of Thrones S08E03 1080p AMZN WEB-DL DDP5 1 H 264-GoT, Size: 4300000000 bytes, Age: 150 days, Seed: 3180, Leech: 765, URL: https://kickasstorrents.to/game-of-thrones-s08e03-1080p-amzn-web-dl-ddp5-1-h-264-got-t3727273.html, Magnet: magnet:?xt=urn:btih:CE74D4432EA107B66DAB690DD310D33A7BA47BAA&dn=Game.of.Thrones.S08E03.1080p.AMZN.WEB-DL.DDP5.1.H.264-GoT&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2730%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2760%2Fannounce&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce]
+
+# Created at 2019-10-05T10:57:51.602
+Unexpected IOException with stream: 
+
+
+# Created at 2019-10-05T10:57:52.235
+Unexpected IOException with stream: [Name: Game of Thrones S08E03 1080p WEB H264-MEMENTO, Size: 4900000000 bytes, Age: 150 days, Seed: 3171, Leech: 521, URL: https://kickasstorrents.to/game-of-thrones-s08e03-1080p-web-h264-memento-t3727262.html, Magnet: magnet:?xt=urn:btih:72610AFF91EC5A7C89397B3BDD09EF7056F40230&dn=Game.of.Thrones.S08E03.1080p.WEB.H264-MEMENTO&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2720%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2780%2Fannounce&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce]
+
+# Created at 2019-10-05T10:57:52.240
+Unexpected IOException with stream: 
+
+
+# Created at 2019-10-05T10:57:52.816
+Unexpected IOException with stream: [Name: Game of Thrones S08E02 1080p HBOGO WEB x264-ADRENALiNE, Size: 1300000000 bytes, Age: 150 days, Seed: 3054, Leech: 556, URL: https://kickasstorrents.to/game-of-thrones-s08e02-1080p-hbogo-web-x264-adrenaline-t3716321.html, Magnet: magnet:?xt=urn:btih:4A883BACC4015DFD5B455EDF8E9725930399F705&dn=Game.of.Thrones.S08E02.1080p.HBOGO.WEB.x264-ADRENALiNE&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce]
+
+# Created at 2019-10-05T10:57:52.820
+Unexpected IOException with stream: 
+
+
+# Created at 2019-10-05T10:57:53.518
+Unexpected IOException with stream: [Name: Game of Thrones S08E02 WEB H264-MEMENTO eztv, Size: 298300000 bytes, Age: 150 days, Seed: 3032, Leech: 369, URL: https://kickasstorrents.to/game-of-thrones-s08e02-web-h264-memento-eztv-t3716333.html, Magnet: magnet:?xt=urn:btih:9FC3854FC07C652CE1A7443D8E81F4D6CFDB2A9D&dn=Game+of+Thrones+S08E02+WEB+H264-MEMENTO+%5Beztv%5D&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftorrent.gresille.org%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.com%3A1337&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce]
+
+# Created at 2019-10-05T10:57:53.522
+Unexpected IOException with stream: 
+
+
+# Created at 2019-10-05T10:57:54.157
+Unexpected IOException with stream: [Name: Game Of Thrones S08E02 iNTERNAL 720p HDTV x264-TURBO eztv, Size: 959500000 bytes, Age: 150 days, Seed: 2711, Leech: 1556, URL: https://kickasstorrents.to/game-of-thrones-s08e02-internal-720p-hdtv-x264-turbo-eztv-t3716641.html, Magnet: magnet:?xt=urn:btih:42C40F5DBB030C77C6FA817469CB18B57C2263AD&dn=Game+Of+Thrones+S08E02+iNTERNAL+720p+HDTV+x264-TURBO+%5Beztv%5D&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftorrent.gresille.org%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.com%3A1337&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce]
+
+# Created at 2019-10-05T10:57:54.160
+Unexpected IOException with stream: 
+
+
+# Created at 2019-10-05T10:57:54.793
+Unexpected IOException with stream: [Name: Game of Thrones S08E02 720p WEB H264-MEMENTO eztv, Size: 1500000000 bytes, Age: 150 days, Seed: 2645, Leech: 214, URL: https://kickasstorrents.to/game-of-thrones-s08e02-720p-web-h264-memento-eztv-t3716338.html, Magnet: magnet:?xt=urn:btih:41B9095DD78F5CADD4CCFBBF0296D6E034318CB6&dn=Game+of+Thrones+S08E02+720p+WEB+H264-MEMENTO+%5Beztv%5D&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftorrent.gresille.org%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.com%3A1337&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce]
+
+# Created at 2019-10-05T10:57:54.797
+Unexpected IOException with stream: 
+
+
+# Created at 2019-10-05T10:57:55.430
+Unexpected IOException with stream: [Name: Game of Thrones S08E01 REPACK WEB H264-MEMENTO eztv, Size: 350400000 bytes, Age: 150 days, Seed: 2616, Leech: 562, URL: https://kickasstorrents.to/game-of-thrones-s08e01-repack-web-h264-memento-eztv-t3705395.html, Magnet: magnet:?xt=urn:btih:CF780BB259A7BAD095F41A198CCD3746097109F4&dn=Game+of+Thrones+S08E01+REPACK+WEB+H264-MEMENTO+%5Beztv%5D&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftorrent.gresille.org%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.com%3A1337&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce]
+
+# Created at 2019-10-05T10:57:55.434
+Unexpected IOException with stream: 
+
+
+# Created at 2019-10-05T10:57:56.076
+Unexpected IOException with stream: [Name: Game of Thrones S08E06 1080p WEB H264-MEMENTO, Size: 4400000000 bytes, Age: 120 days, Seed: 2588, Leech: 663, URL: https://kickasstorrents.to/game-of-thrones-s08e06-1080p-web-h264-memento-t3769742.html, Magnet: magnet:?xt=urn:btih:E1216C5DA9DE1361489D8E694CAA78B32F1FFACB&dn=Game.of.Thrones.S08E06.1080p.WEB.H264-MEMENTO&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2760%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2730%2Fannounce&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce]
+
+# Created at 2019-10-05T10:57:56.081
+Unexpected IOException with stream: 
+
+
+# Created at 2019-10-05T10:57:56.086
+Unexpected IOException: 6,1,org.mediacat.torrent.TorrentEngineManagerTest,fetchMagnetsTest,null,null,null
+
+
+# Created at 2019-10-05T10:57:56.094
+Unexpected IOException: 5,1,org.mediacat.torrent.TorrentEngineManagerTest,torrentMetaListContainsNElementsTest,null,null,null
+
+
+# Created at 2019-10-05T10:57:58.011
+Unexpected IOException: 8,1,org.mediacat.torrent.TorrentEngineManagerTest,torrentMetaListContainsNElementsTest,null,expected: <20> but was: <40>,null,expected: <20> but was: <40>,TorrentEngineManagerTest.torrentMetaListContainsNElementsTest:27 expected: <20> but was: <40>,org.opentest4j.AssertionFailedError: expected: <20> but was: <40>\000A\0009at org.mediacat@1.0.0-SNAPSHOT/org.mediacat.torrent.TorrentEngineManagerTest.torrentMetaListContainsNElementsTest(TorrentEngineManagerTest.java:27)\000A
+
+
+# Created at 2019-10-05T10:57:58.015
+Unexpected IOException: 2,1,org.apache.maven.surefire.junitplatform.JUnitPlatformProvider,org.mediacat.torrent.TorrentEngineManagerTest,null,null,null
+
+
