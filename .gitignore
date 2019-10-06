@@ -2,3 +2,5 @@ target
 .idea
 mediacat.iml
 configs
+buildjre.cmd
+mcat.bat
