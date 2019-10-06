@@ -31,12 +31,16 @@ public class CommandLineInterface {
 
     private static Quality[] getQualitiesInArray (CmdParameters params) {
         List<Quality> qualityList = new ArrayList<>();
-        if (params.includeTheatre)
+        if (params.includeAllQualities) {
             qualityList.add(Quality.THEATRE);
-        if (params.includeHd)
             qualityList.add(Quality.HD);
-        if(params.includeBluray)
-            qualityList.add(Quality.BLURAY);
+            qualityList.add(Quality.UNKNOWN);
+        } else {
+            if (params.includeTheatre)
+                qualityList.add(Quality.THEATRE);
+            if (params.includeHd)
+                qualityList.add(Quality.HD);
+        }
 
         Quality[] qualities = new Quality[qualityList.size()];
         qualityList.toArray(qualities);
@@ -51,8 +55,10 @@ public class CommandLineInterface {
             var infoList = getTorrents(params);
             new OutputFormatter(params, infoList).print();
         } catch (TorrentEngineFailedException e) {
-            if (e.getMessage().equals("ran out of engines"))
-                System.out.println("No results found. Make sure you spelled the keyword right.");
+            String msg = e.getMessage();
+            if (msg != null && msg.equals("ran out of engines"))
+                System.out.println("No results found! :(\n" +
+                        "Try to be more specific with your keyword and double check the spellings.");
             else throw e;
         }
     }

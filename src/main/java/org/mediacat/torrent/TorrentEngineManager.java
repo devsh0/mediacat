@@ -74,9 +74,13 @@ final public class TorrentEngineManager implements Observer {
         do {
             ++page;
             var temp = engine.getTorrentInfoList(search, page);
+
+            /* To lower the chances of getting banned, we first apply the
+            * filters and then check the filtered list for emptiness. It
+            * is assumed that if the Nth page does not return any "valid"
+            * result, subsequent pages won't either */
             temp = filter.filter(temp);
 
-            // we're outta results
             if (temp.isEmpty())
                 break;
 

@@ -17,20 +17,21 @@ public class CmdParameters {
     boolean includeTheatre;
 
     @Option(
+            names = {"-a", "--all"},
+            description = "Optional. If specified, other quality parameters will be ignored" +
+                    " and torrents of any quality (or no quality at all, as in case of non-media" +
+                    " files) will be included. If no quality is specified, this option will be" +
+                    " set to true."
+    )
+    boolean includeAllQualities;
+
+    @Option(
             names = "--hd",
             description = "Optional. If specified, high quality (those extracted from" +
                     " a hd media disk) torrent media files will be included in the" +
                     " results. By default, this type of torrents are included."
     )
     boolean includeHd;
-
-    @Option(
-            names = "--bluray",
-            description = "Optional. If specified, bluray (those extracted from" +
-                    " a bluray disk) torrent media files will be included in the" +
-                    " results. By default, this type of torrents are included."
-    )
-    boolean includeBluray;
 
     @Option(
             names = {"-f", "--fetch-count"},
@@ -66,7 +67,7 @@ public class CmdParameters {
     boolean allowUntrusted;
 
     public void wrapUp() {
-        if (!includeBluray && !includeHd && !includeTheatre)
-            includeBluray = includeHd = includeTheatre = true;
+        if (!includeHd && !includeTheatre)
+            includeAllQualities = true;
     }
 }

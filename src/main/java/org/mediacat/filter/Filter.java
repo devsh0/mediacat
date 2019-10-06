@@ -11,7 +11,7 @@ final public class Filter {
     private Quality[] allowedQualities = new Quality[]{
             Quality.THEATRE,
             Quality.HD,
-            Quality.BLURAY
+            Quality.UNKNOWN
     };
 
     private Filter() {

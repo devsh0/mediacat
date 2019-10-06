@@ -2,6 +2,7 @@ package org.mediacat.torrent;
 
 import org.mediacat.filter.Quality;
 import org.mediacat.settings.TorrentEngineSettings;
+import org.mediacat.utils.Utils;
 
 public class TorrentInfo implements Comparable<TorrentInfo> {
     private final String name;
@@ -91,7 +92,7 @@ public class TorrentInfo implements Comparable<TorrentInfo> {
     @Override
     public String toString() {
         return "Name: " + this.name + "\n" +
-                "Size: " + this.sizeInBytes + " bytes\n" +
+                "Size: " + Utils.sizeInBytesToReadable(this.sizeInBytes) + "\n" +
                 "Age: " + this.ageInDays + " days\n" +
                 "Seed: " + this.seed + "\n" +
                 "Leech: " + this.leech + "\n" +

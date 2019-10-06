@@ -78,4 +78,24 @@ final public class Utils {
 
         return age;
     }
+
+    public static String sizeInBytesToReadable(long bytes) {
+        double size = bytes;
+        if (size < 1000)
+            return String.format("%.2f bytes", size);
+
+        size /= 1000;
+        if (size < 1000)
+            return String.format("%.2f KB", size);
+
+        size /= 1000;
+        if (size < 1000)
+            return String.format("%.2f MB", size);
+
+        size /= 1000;
+        if (size < 1000)
+            return String.format("%.2f GB", size);
+
+        return String.format("%.2f TB", size);
+    }
 }
