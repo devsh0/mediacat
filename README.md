@@ -1,11 +1,14 @@
 # Mediacat
-Simple tool to extract torrent magnets from the web.
+Simple tool to grab torrent magnets from the web.
 ```
 mcat "Best Movie in The World" --hd -f=3
 ```
 
 ### Usage
-`mcat --help` for usage instructions.
+**Currently, Mediacat is only tested to work on Windows 10 x64 bit.** 
+
+Download file `bin/mcat-1.0.0-win-x64.zip`. Extract it to some directory and `cd` to it.
+Then do `mcat --help` for usage instructions.
 
 ### Build
 **Make sure you have a working copy of Java 11 installed on your machine.**
