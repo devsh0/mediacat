@@ -49,8 +49,13 @@ public class CommandLineInterface {
 
     public static void main(String[] args) throws TorrentEngineFailedException {
         CmdParameters params = new CmdParameters();
-        new CommandLine(params).parseArgs(args);
-        params.wrapUp();
+        CommandLine cmdLine = new CommandLine(params);
+        cmdLine.parseArgs(args);
+        if (cmdLine.isUsageHelpRequested()) {
+            cmdLine.usage(System.out);
+            return;
+        }
+        params.postProcess();
         try {
             var infoList = getTorrents(params);
             new OutputFormatter(params, infoList).print();

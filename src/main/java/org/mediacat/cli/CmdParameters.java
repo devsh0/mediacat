@@ -1,9 +1,11 @@
 package org.mediacat.cli;
 
 
+import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
+@Command(mixinStandardHelpOptions = true)
 public class CmdParameters {
     @Parameters
     String searchTerm;
@@ -60,13 +62,13 @@ public class CmdParameters {
 
     @Option(
             names = {"-u", "--allow-untrusted"},
-            description = "Optional. If specified, torrents uploaded by untrusted (non-vpi)" +
+            description = "Optional. If specified, torrents uploaded by untrusted (non-vip)" +
                     " members will be included. Depending on the torrent engine being used," +
                     " this option may not have any effect in the search results."
     )
     boolean allowUntrusted;
 
-    public void wrapUp() {
+    public void postProcess() {
         if (!includeHd && !includeTheatre)
             includeAllQualities = true;
     }
