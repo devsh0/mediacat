@@ -61,7 +61,7 @@ public class CmdParameters {
             names = {"-u", "--allow-untrusted"},
             description = "Optional. If specified, torrents uploaded by untrusted (non-vpi)" +
                     " members will be included. Depending on the torrent engine being used," +
-                    " this option may not have any effect in the search results returned."
+                    " this option may not have any effect in the search results."
     )
     boolean allowUntrusted;
 

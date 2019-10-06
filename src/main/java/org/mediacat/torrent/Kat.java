@@ -3,6 +3,7 @@ package org.mediacat.torrent;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.mediacat.utils.Utils;
 
 import java.io.IOException;
 import java.net.Proxy;
@@ -21,63 +22,6 @@ final class Kat implements TorrentEngine {
         String DATA_CELL = "td.center";
         String MAGNET_LINK = "a[title='Magnet link']";
         String TRUSTED_UPLOADED = "i[title='Verified Uploader']";
-    }
-
-    private static class Parser {
-        static long parseSize(String sizeStr) {
-            String[] pieces = sizeStr.split("\\s");
-            double size = Double.parseDouble(pieces[0]);
-            switch (pieces[1].toUpperCase()) {
-                case "KB":
-                    size *= 1000L;
-                    break;
-                case "MB":
-                    size *= 1000_000L;
-                    break;
-                case "GB":
-                    size *= 1000_000_000L;
-                    break;
-                case "TB":
-                    size *= 1000_000_000_000L;
-                    break;
-            }
-
-            return (long) size;
-        }
-
-        static int parseAge(String ageStr) {
-            String[] pieces = ageStr.split("\\s");
-            int age = Integer.parseInt(pieces[0]);
-            switch (pieces[1].toLowerCase()) {
-                case "hour":
-                case "hours":
-                case "min.":
-                    age = 0;
-                    break;
-                case "month":
-                case "months":
-                    age *= 30;
-                    break;
-                case "year":
-                case "years":
-                    age *= 365;
-                    break;
-            }
-
-            return age;
-        }
-
-        static int parseSeed(String seedStr) {
-            return Integer.parseInt(seedStr);
-        }
-
-        static int parseLeech(String leechStr) {
-            return Integer.parseInt(leechStr);
-        }
-
-        static String parseTorrentUrl(String url) {
-            return url;
-        }
     }
 
     private final String engineName;
@@ -176,11 +120,11 @@ final class Kat implements TorrentEngine {
 
         for (Element row : rows) {
             String torrentName = extractName(row).replace(".", " ");
-            long size = Parser.parseSize(extractSimpleCellData(row, 0));
-            int age = Parser.parseAge(extractSimpleCellData(row, 2));
-            int seed = Parser.parseSeed(extractSimpleCellData(row, 3));
-            int leech = Parser.parseLeech(extractSimpleCellData(row, 4));
-            String torUrl = Parser.parseTorrentUrl(extractTorrentUrl(row));
+            long size = Utils.parseMediaSize(extractSimpleCellData(row, 0));
+            int age = Utils.parseMediaAge(extractSimpleCellData(row, 2));
+            int seed = Integer.parseInt(extractSimpleCellData(row, 3));
+            int leech = Integer.parseInt(extractSimpleCellData(row, 4));
+            String torUrl = extractTorrentUrl(row);
             String fullTorUrl = baseUrl + (torUrl.startsWith("/") ? "" : "/") + torUrl;
             boolean trustedUploader = isTrustedUploader(row);
 
