@@ -7,9 +7,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CommandLineInterfaceTest {
     @Test
-    public void getTheatreTorrentsTest() {
+    public void getTorrentTest() {
         try {
-            String[] args = {"Article 15", "--best", "--hd"};
+            String[] args = {"--hd", "Fight Club"};
             CommandLineInterface.main(args);
         } catch (TorrentEngineFailedException e) {
             e.printStackTrace();

@@ -11,7 +11,7 @@ public class TorrentEngineManagerTest {
     private final String filePath = "src/main/resources/torrent.settings.properties";
     private final TorrentEngineSettings settings = TorrentEngineSettings.getInstance(filePath);
     private final TorrentEngineManager manager = TorrentEngineManager.getInstance(settings);
-    private final Quality[] allQualities = new Quality[]{Quality.THEATRE, Quality.HD, Quality.BLURAY};
+    private final Quality[] allQualities = new Quality[]{Quality.THEATRE, Quality.HD};
     private final String search = "Game of Thrones";
     private final int defaultFetchCount = settings.getFetchCount();
 
