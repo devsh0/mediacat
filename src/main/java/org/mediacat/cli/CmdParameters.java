@@ -5,7 +5,7 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
-@Command(mixinStandardHelpOptions = true)
+@Command(mixinStandardHelpOptions = true, version = "Mediacat Version: 1.0.0")
 public class CmdParameters {
     @Parameters
     String searchTerm;

@@ -54,6 +54,9 @@ public class CommandLineInterface {
         if (cmdLine.isUsageHelpRequested()) {
             cmdLine.usage(System.out);
             return;
+        } else if(cmdLine.isVersionHelpRequested()) {
+            cmdLine.printVersionHelp(System.out);
+            return;
         }
         params.postProcess();
         try {
