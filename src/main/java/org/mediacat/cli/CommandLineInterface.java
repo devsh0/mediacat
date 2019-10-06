@@ -47,7 +47,13 @@ public class CommandLineInterface {
         CmdParameters params = new CmdParameters();
         new CommandLine(params).parseArgs(args);
         params.wrapUp();
-        var infoList = getTorrents(params);
-        new OutputFormatter(params, infoList).print();
+        try {
+            var infoList = getTorrents(params);
+            new OutputFormatter(params, infoList).print();
+        } catch (TorrentEngineFailedException e) {
+            if (e.getMessage().equals("ran out of engines"))
+                System.out.println("No results found. Make sure you spelled the keyword right.");
+            else throw e;
+        }
     }
 }
