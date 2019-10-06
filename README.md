@@ -32,11 +32,11 @@ To add your own implementation to the list of available engines,
 Add the fully qualified name of your class as an entry for `org.mediacat.torrent.impls`. Multiple implementation
 names must be separated by a comma. Then add three more properties to this file in this format:
 
-***<fully-qualified-class-name>.url=<http(s)://baseurl.com>***
+***[fully-qualified-class-name].url=[http(s)://baseurl.com]***
 
-***<fully-qualified-class-name>.searchPath=<path/to/search>***
+***[fully-qualified-class-name].searchPath=[path/to/search]***
 
-***<fully-qualified-class-name>.proxy.isSet=false***
+***[fully-qualified-class-name].proxy.isSet=false***
 
 `*.url` specifies the base URL of the website that will be crawled for magnets. With `*.searchPath`, you
 specify the endpoint to perform searches in that website. `*.proxy.*` properties are there to allow proxy
