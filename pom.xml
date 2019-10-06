@@ -61,7 +61,6 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <addClasspath>true</addClasspath>
                             <mainClass>org.mediacat.cli.CommandLineInterface</mainClass>
                         </manifest>
                     </archive>

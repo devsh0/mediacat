@@ -104,9 +104,9 @@ final public class TorrentEngineManager implements Observer {
                     engine = incrementIndexAndGetEngine();
                     infoList = infoListHelper(engine, searchTerm, filter);
                 } catch (TorrentEngineFailedException e) {
-                    // since all the engines have failed and engineIndex
-                    //  is in an invalid state, we reset the index where it
-                    //  was before processing this search
+                    // Since all the engines have failed and engineIndex
+                    // is in an invalid state, we reset the index where it
+                    // was before processing this search
                     engineIndex = activeEngine;
                     throw e;
                 }
@@ -129,9 +129,9 @@ final public class TorrentEngineManager implements Observer {
     }
 
     String getMagnetOf(TorrentInfo info) throws TorrentEngineFailedException {
-        // Some websites don't expose magnet urls in search results
-        //  This is a helper method that is invoked by TorrentInfo class
-        //  when the magnet is finally queried
+        // Some websites don't expose magnet urls in search results.
+        // This is a helper method that is invoked by TorrentInfo class
+        // when the magnet is finally queried.
         synchronized (LOCK) {
             TorrentEngine usedEngine = getUsedEngine(info);
             String magnet = usedEngine.getMagnet(info.getTorrentUrl());
@@ -149,7 +149,7 @@ final public class TorrentEngineManager implements Observer {
         //resetEngineIndex();
 
         // setupEngines must not be called here because we don't
-        //  want to break singleton-ness of engines via reflection
+        // want to break singleton-ness of engines via reflection
         for (TorrentEngine engine : engineImpls) {
             String implName = engine.getClass().getCanonicalName();
             String baseUrl = engineSettings.getBaseUrlFor(implName);
