@@ -17,7 +17,7 @@ public class TorrentInfo implements Comparable<TorrentInfo> {
     private volatile boolean trustedUploader;
     private volatile String magnetUrl;
 
-    TorrentInfo(String engineName, String torrentName, long sizeInBytes, int ageInDays, int seed,
+    public TorrentInfo(String engineName, String torrentName, long sizeInBytes, int ageInDays, int seed,
                 int leech, String torrentUrl) {
         this.engineName = engineName;
         this.name = torrentName;
@@ -29,7 +29,7 @@ public class TorrentInfo implements Comparable<TorrentInfo> {
         this.torrentUrl = torrentUrl;
     }
 
-    TorrentInfo(String engineName, String torrentName, long sizeInBytes, int ageInDays,
+    public TorrentInfo(String engineName, String torrentName, long sizeInBytes, int ageInDays,
                 int seed, int leech, String torrentUrl, String magnetUrl) {
         this(engineName, torrentName, sizeInBytes, ageInDays, seed, leech, torrentUrl);
         this.magnetUrl = magnetUrl;
