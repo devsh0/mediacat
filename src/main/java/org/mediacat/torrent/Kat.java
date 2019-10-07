@@ -49,23 +49,6 @@ final class Kat extends AbstractEngine {
                 .get();
     }
 
-    // Setters
-    @Override
-    public void setBaseUrl(String baseUrl) {
-        this.baseUrl = baseUrl;
-    }
-
-    @Override
-    public void setSearchPath(String searchPath) {
-        this.searchPath = searchPath;
-    }
-
-    @Override
-    public void setProxy(Proxy proxy) {
-        this.proxy = proxy;
-
-    }
-
     private String extractName(Element row) {
         Element mainLink = row.selectFirst(SELECTORS.CELL_MAIN_LINK);
         String innerText = mainLink.text().trim();
