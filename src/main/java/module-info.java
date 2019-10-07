@@ -6,6 +6,4 @@ module org.mediacat {
     exports org.mediacat.settings;
     exports org.mediacat.utils;
     exports org.mediacat.filter;
-    exports org.mediacat.cli;
-    opens org.mediacat.cli;
 }
