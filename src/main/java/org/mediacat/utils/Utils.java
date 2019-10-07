@@ -5,8 +5,7 @@ final public class Utils {
      * Returns the byte equivalent of <code>sizeStr</code> as a long
      *
      * <p>Format must be "<code>size  unit</code>" where <code>unit</code>
-     * can be one of [kb|kib|kilobyte|kilo byte|mb|mib|megabyte|mega byte|
-     * gb|gib|gigabyte|giga byte]</p>
+     * can be one of [kb|kib|kilobyte|mb|mib|megabyte|gb|gib|gigabyte]</p>
      *
      * @param sizeStr size as a String in the format "<code>size unit</code>"
      * @return byte equivalent of <code>sizeStr</code> as a long
@@ -18,25 +17,21 @@ final public class Utils {
             case "KB":
             case "KIB":
             case "KILOBYTE":
-            case "KILO BYTE":
                 size *= 1000L;
                 break;
             case "MB":
             case "MIB":
             case "MEGABYTE":
-            case "MEGA BYTE":
                 size *= 1000_000L;
                 break;
             case "GB":
             case "GIB":
             case "GIGABYTE":
-            case "GIGA BYTE":
                 size *= 1000_000_000L;
                 break;
             case "TB":
             case "TIB":
             case "TERABYTE":
-            case "TERA BYTE":
                 size *= 1000_000_000_000L;
                 break;
         }
