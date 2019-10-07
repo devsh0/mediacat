@@ -1,7 +1,7 @@
 package org.mediacat.utils;
 
 import java.time.Duration;
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 final public class Utils {
@@ -79,8 +79,8 @@ final public class Utils {
     }
 
     public static int dateToDays (String dateStr, DateTimeFormatter formatter) {
-        ZonedDateTime today = ZonedDateTime.now();
-        ZonedDateTime past = ZonedDateTime.parse(dateStr, formatter);
+        LocalDate today = LocalDate.now();
+        LocalDate past = LocalDate.parse(dateStr, formatter);
         return (int)Duration.between(past, today).toDays();
     }
 
