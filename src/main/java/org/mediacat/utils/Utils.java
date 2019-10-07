@@ -78,7 +78,7 @@ final public class Utils {
         return age;
     }
 
-    public int dateToDays (String dateStr, DateTimeFormatter formatter) {
+    public static int dateToDays (String dateStr, DateTimeFormatter formatter) {
         ZonedDateTime today = ZonedDateTime.now();
         ZonedDateTime past = ZonedDateTime.parse(dateStr, formatter);
         return (int)Duration.between(past, today).toDays();
