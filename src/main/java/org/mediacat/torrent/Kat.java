@@ -25,7 +25,6 @@ final class Kat extends AbstractEngine {
     }
 
     private final String engineName;
-    private volatile boolean isFailing;
 
     private Kat(String baseUrl, String searchPath, Proxy proxy) {
         super(baseUrl, searchPath, proxy);
@@ -40,11 +39,6 @@ final class Kat extends AbstractEngine {
         } catch (Exception e) {
             throw new TorrentEngineFailedException(e);
         }
-    }
-
-    @Override
-    public boolean isFailing() {
-        return isFailing;
     }
 
     //todo: proxy is broken

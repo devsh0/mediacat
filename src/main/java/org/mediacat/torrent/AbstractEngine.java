@@ -6,6 +6,7 @@ abstract public class AbstractEngine implements TorrentEngine {
     protected volatile String baseUrl;
     protected volatile String searchPath;
     protected volatile Proxy proxy;
+    protected volatile boolean isFailing;
 
     public AbstractEngine (String baseUrl, String searchPath, Proxy proxy) {
         this.baseUrl = baseUrl;
@@ -43,5 +44,10 @@ abstract public class AbstractEngine implements TorrentEngine {
     @Override
     public void setProxy(Proxy proxy) {
         this.proxy = proxy;
+    }
+
+    @Override
+    public boolean isFailing() {
+        return isFailing;
     }
 }
