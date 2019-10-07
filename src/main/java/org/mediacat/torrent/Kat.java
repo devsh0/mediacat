@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-final class Kat implements TorrentEngine {
+final class Kat extends AbstractEngine {
     private static final Object LOCK = new Object();
     private static Kat instance;
 
@@ -25,32 +25,11 @@ final class Kat implements TorrentEngine {
     }
 
     private final String engineName;
-    private volatile String baseUrl;
-    private volatile String searchPath;
-    private volatile Proxy proxy;
     private volatile boolean isFailing;
 
     private Kat(String baseUrl, String searchPath, Proxy proxy) {
+        super(baseUrl, searchPath, proxy);
         this.engineName = this.getClass().getCanonicalName();
-        this.baseUrl = baseUrl;
-        this.searchPath = searchPath;
-        this.proxy = proxy;
-    }
-
-    // Getters
-    @Override
-    public String getBaseUrl() {
-        return baseUrl;
-    }
-
-    @Override
-    public String getSearchPath() {
-        return searchPath;
-    }
-
-    @Override
-    public Proxy getProxy() {
-        return proxy;
     }
 
     @Override
