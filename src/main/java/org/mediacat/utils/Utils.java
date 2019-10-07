@@ -1,7 +1,7 @@
 package org.mediacat.utils;
 
-import java.time.Duration;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
 final public class Utils {
@@ -81,7 +81,7 @@ final public class Utils {
     public static int dateToDays (String dateStr, DateTimeFormatter formatter) {
         LocalDate today = LocalDate.now();
         LocalDate past = LocalDate.parse(dateStr, formatter);
-        return (int)Duration.between(past, today).toDays();
+        return Period.between(past, today).getDays();
     }
 
     public static String sizeInBytesToReadable(long bytes) {
