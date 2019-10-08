@@ -10,11 +10,16 @@ import java.net.ProxySelector;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 
 import static java.net.http.HttpResponse.BodyHandlers;
 
 abstract public class AbstractEngine implements TorrentEngine {
+    private static final String USER_AGENT =
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
+            "(KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36";
+
     private volatile HttpClient httpClient;
     protected volatile String baseUrl;
     protected volatile String searchPath;
@@ -34,6 +39,7 @@ abstract public class AbstractEngine implements TorrentEngine {
                 .version(HttpClient.Version.HTTP_2)
                 .connectTimeout(Duration.ofSeconds(30))
                 .proxy(selector)
+                .followRedirects(HttpClient.Redirect.NORMAL)
                 .build();
     }
 
@@ -77,10 +83,12 @@ abstract public class AbstractEngine implements TorrentEngine {
 
     protected Document getDocument (String url) throws IOException, InterruptedException {
             HttpRequest req = HttpRequest.newBuilder()
+                    .header("User-Agent", USER_AGENT)
                     .uri(URI.create(url))
                     .build();
 
-            String body = httpClient.send(req, BodyHandlers.ofString()).body();
+            var response = httpClient.send(req, BodyHandlers.ofString(StandardCharsets.UTF_8));
+            String body = response.body();
             return Jsoup.parse(body);
     }
 }
