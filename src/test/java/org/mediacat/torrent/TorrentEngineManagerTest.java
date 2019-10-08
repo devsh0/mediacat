@@ -5,6 +5,13 @@ import org.mediacat.filter.Filter;
 import org.mediacat.filter.Quality;
 import org.mediacat.settings.TorrentEngineSettings;
 
+import java.io.IOException;
+import java.net.*;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.util.List;
+
+import static java.net.http.HttpResponse.BodyHandlers;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TorrentEngineManagerTest {
@@ -31,26 +38,6 @@ public class TorrentEngineManagerTest {
         }
     }
 
-    /*@Test
-    public void goToNextPageIfEnoughResultsNotFoundInPage1Test() {
-        try {
-            int moreThan1stPageReturns = 20 + 10;
-            var filter = Filter.builder()
-                    .allowQualities(Quality.HD)
-                    .build();
-
-            var infoList = manager.getTorrentInfoList(search, filter);
-
-            for (int i = 0; i < infoList.size(); i++)
-                System.out.println(i + 1 + ". " + infoList.get(i));
-
-            assertEquals(moreThan1stPageReturns, infoList.size());
-        } catch (TorrentEngineFailedException e) {
-            e.printStackTrace();
-            fail("Exception thrown");
-        }
-    }*/
-
     @Test
     public void gotRestrictedResultsBasedOnQualityTest() {
         try {
@@ -67,6 +54,38 @@ public class TorrentEngineManagerTest {
         } catch (TorrentEngineFailedException e) {
             e.printStackTrace();
             fail("Exception thrown");
+        }
+    }
+
+    @Test
+    public void httpClientProxyTest() {
+        try {
+            String url = "https://api.ipify.org";
+            String proxyHost = "103.81.77.13";
+            InetSocketAddress addr = new InetSocketAddress(proxyHost, 82);
+
+            HttpClient client = HttpClient.newBuilder()
+                    .proxy(new ProxySelector() {
+                        @Override
+                        public List<Proxy> select(URI uri) {
+                            return List.of(new Proxy(Proxy.Type.HTTP, addr));
+                        }
+
+                        @Override
+                        public void connectFailed(URI uri, SocketAddress sa, IOException ioe) {
+                            ioe.printStackTrace(System.err);
+                        }
+                    })
+                    .build();
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .build();
+
+            String ip = client.send(request, BodyHandlers.ofString()).body();
+            assertTrue(ip.contains(proxyHost));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
