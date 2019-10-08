@@ -1,12 +1,12 @@
 package org.mediacat.torrent;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.mediacat.utils.Utils;
 
-import java.io.IOException;
 import java.net.Proxy;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,14 +39,6 @@ final class Kat extends AbstractEngine {
         } catch (Exception e) {
             throw new TorrentEngineFailedException(e);
         }
-    }
-
-    //todo: proxy is broken
-    private Document getDocument(String url) throws IOException {
-        return Jsoup.connect(url)
-                .proxy(proxy)
-                .followRedirects(true)
-                .get();
     }
 
     private String extractName(Element row) {
@@ -103,8 +95,9 @@ final class Kat extends AbstractEngine {
     public List<TorrentInfo> getTorrentInfoList(String searchTerm, int pageNo)
             throws TorrentEngineFailedException {
         try {
+            searchTerm = URLEncoder.encode(searchTerm, StandardCharsets.UTF_8);
             String fullUrl = baseUrl + searchPath + searchTerm + "/" + pageNo;
-            Document document = getDocument(fullUrl);
+            Document document = super.getDocument(fullUrl);
             return hasResults(document.html()) ?
                     collectTorrentInfo(document) : Collections.emptyList();
         } catch (Exception e) {
