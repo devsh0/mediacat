@@ -4,101 +4,83 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.ProxySelector;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
-import java.util.HashMap;
-import java.util.Map;
+import java.time.Duration;
 
 import static java.net.http.HttpResponse.BodyHandlers;
 
 abstract public class AbstractEngine implements TorrentEngine {
-    private static final Object LOCK = new Object();
-    private static final Map<String, Proxy> proxyMap = new HashMap<>();
-    private static final ProxySelector proxySelector = new TorrentProxySelector(proxyMap);
-
-    protected String baseUrl;
-    protected String searchPath;
-    protected Proxy proxy;
-    protected boolean isFailing;
+    private volatile HttpClient httpClient;
+    protected volatile String baseUrl;
+    protected volatile String searchPath;
+    protected volatile Proxy proxy;
+    protected volatile boolean isFailing;
 
     public AbstractEngine (String baseUrl, String searchPath, Proxy proxy) {
-        synchronized (LOCK) {
-            this.baseUrl = baseUrl;
-            this.searchPath = searchPath;
-            this.proxy = proxy;
-            proxyMap.put(baseUrl, proxy);
-        }
+        this.baseUrl = baseUrl;
+        this.searchPath = searchPath;
+        this.proxy = proxy;
+        setupClient();
+    }
+
+    private void setupClient() {
+        var selector = ProxySelector.of((InetSocketAddress)proxy.address());
+        httpClient = HttpClient.newBuilder()
+                .version(HttpClient.Version.HTTP_2)
+                .connectTimeout(Duration.ofSeconds(30))
+                .proxy(selector)
+                .build();
     }
 
     // Getters
     @Override
     public String getBaseUrl() {
-        synchronized (LOCK) {
-            return baseUrl;
-        }
+        return baseUrl;
     }
 
     @Override
     public String getSearchPath() {
-        synchronized (LOCK) {
-            return searchPath;
-        }
+        return searchPath;
     }
 
     @Override
     public Proxy getProxy() {
-        synchronized (LOCK) {
-            return proxy;
-        }
+        return proxy;
     }
 
     // Setters
     @Override
     public void setBaseUrl(String baseUrl) {
-        synchronized (LOCK) {
-            Proxy proxy = proxyMap.remove(this.baseUrl);
-            this.baseUrl = baseUrl;
-            proxyMap.put(baseUrl, proxy);
-        }
+        this.baseUrl = baseUrl;
     }
 
     @Override
     public void setSearchPath(String searchPath) {
-        synchronized (LOCK) {
-            this.searchPath = searchPath;
-        }
+        this.searchPath = searchPath;
     }
 
     @Override
     public void setProxy(Proxy proxy) {
-        synchronized (LOCK) {
-            this.proxy = proxy;
-            proxyMap.put(baseUrl, proxy);
-        }
+        this.proxy = proxy;
+        setupClient();
     }
 
     @Override
     public boolean isFailing() {
-        synchronized (LOCK) {
-            return isFailing;
-        }
+        return isFailing;
     }
 
     protected Document getDocument (String url) throws IOException, InterruptedException {
-        synchronized (LOCK) {
-            HttpClient client = HttpClient.newBuilder()
-                    .proxy(proxySelector)
-                    .build();
-
             HttpRequest req = HttpRequest.newBuilder()
                     .uri(URI.create(url))
                     .build();
 
-            String body = client.send(req, BodyHandlers.ofString()).body();
+            String body = httpClient.send(req, BodyHandlers.ofString()).body();
             return Jsoup.parse(body);
-        }
     }
 }

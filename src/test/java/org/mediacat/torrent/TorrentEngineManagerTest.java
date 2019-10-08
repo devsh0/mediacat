@@ -5,13 +5,6 @@ import org.mediacat.filter.Filter;
 import org.mediacat.filter.Quality;
 import org.mediacat.settings.TorrentEngineSettings;
 
-import java.io.IOException;
-import java.net.*;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.util.List;
-
-import static java.net.http.HttpResponse.BodyHandlers;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TorrentEngineManagerTest {
@@ -57,7 +50,7 @@ public class TorrentEngineManagerTest {
         }
     }
 
-    @Test
+    /*@Test
     public void httpClientProxyTest() {
         try {
             String url = "https://api.ipify.org";
@@ -65,17 +58,7 @@ public class TorrentEngineManagerTest {
             InetSocketAddress addr = new InetSocketAddress(proxyHost, 82);
 
             HttpClient client = HttpClient.newBuilder()
-                    .proxy(new ProxySelector() {
-                        @Override
-                        public List<Proxy> select(URI uri) {
-                            return List.of(new Proxy(Proxy.Type.HTTP, addr));
-                        }
-
-                        @Override
-                        public void connectFailed(URI uri, SocketAddress sa, IOException ioe) {
-                            ioe.printStackTrace(System.err);
-                        }
-                    })
+                    .proxy(ProxySelector.of(addr))
                     .build();
 
             HttpRequest request = HttpRequest.newBuilder()
@@ -87,7 +70,7 @@ public class TorrentEngineManagerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     @Test
     public void resetEngineIndexWhenAllEnginesFailTest() {
