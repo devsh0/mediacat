@@ -17,7 +17,7 @@
     <repositories>
         <repository>
             <id>mediacat</id>
-            <url>https://github.com/CodFront/mediacat.git</url>
+            <url>https://github.com/theaveragedude/mediacat.git</url>
         </repository>
     </repositories>
     <description>
