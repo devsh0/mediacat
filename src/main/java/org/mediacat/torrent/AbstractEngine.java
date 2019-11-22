@@ -19,6 +19,7 @@ abstract public class AbstractEngine implements TorrentEngine {
     private static final String USER_AGENT =
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
             "(KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36";
+    private static final int MAX_RETRIES = 20;
 
     private volatile HttpClient httpClient;
     protected volatile String baseUrl;
@@ -41,6 +42,40 @@ abstract public class AbstractEngine implements TorrentEngine {
                 .proxy(selector)
                 .followRedirects(HttpClient.Redirect.NORMAL)
                 .build();
+    }
+
+    private String makeRequest(String url, int triesLeft) throws IOException, InterruptedException, TorrentEngineFailedException {
+        try {
+            HttpRequest req = HttpRequest.newBuilder()
+                    .header("User-Agent", USER_AGENT)
+                    .uri(URI.create(url))
+                    .build();
+
+            System.out.println("URL: " + url);
+
+            var response = httpClient.send(req, BodyHandlers.ofString(StandardCharsets.UTF_8));
+            return response.body();
+        } catch(IOException exc) {
+            String causeMessage = exc
+                    .getCause()
+                    .getMessage()
+                    .toLowerCase();
+
+            System.out.println("Inside the catch block");
+            System.out.println(causeMessage);
+
+            if (causeMessage.contains("connection reset")) {
+                if (triesLeft > 0) {
+                    System.out.println("Retrying...");
+                    makeRequest(url, triesLeft - 1);
+                    return "";
+                }
+                else
+                    throw new TorrentEngineFailedException("Couldn't get rid of the connection reset error!");
+            }
+        }
+
+        throw new TorrentEngineFailedException("Failed sending request");
     }
 
     // Getters
@@ -81,14 +116,9 @@ abstract public class AbstractEngine implements TorrentEngine {
         return isFailing;
     }
 
-    protected Document getDocument (String url) throws IOException, InterruptedException {
-            HttpRequest req = HttpRequest.newBuilder()
-                    .header("User-Agent", USER_AGENT)
-                    .uri(URI.create(url))
-                    .build();
-
-            var response = httpClient.send(req, BodyHandlers.ofString(StandardCharsets.UTF_8));
-            String body = response.body();
+    protected Document getDocument (String url) throws
+            IOException, InterruptedException, TorrentEngineFailedException {
+            String body = makeRequest(url, MAX_RETRIES);
             return Jsoup.parse(body);
     }
 }
