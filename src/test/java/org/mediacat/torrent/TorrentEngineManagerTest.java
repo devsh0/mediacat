@@ -50,28 +50,6 @@ public class TorrentEngineManagerTest {
         }
     }
 
-    /*@Test
-    public void httpClientProxyTest() {
-        try {
-            String url = "https://api.ipify.org";
-            String proxyHost = "103.81.77.13";
-            InetSocketAddress addr = new InetSocketAddress(proxyHost, 82);
-
-            HttpClient client = HttpClient.newBuilder()
-                    .proxy(ProxySelector.of(addr))
-                    .build();
-
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(url))
-                    .build();
-
-            String ip = client.send(request, BodyHandlers.ofString()).body();
-            assertTrue(ip.contains(proxyHost));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
-
     @Test
     public void resetEngineIndexWhenAllEnginesFailTest() {
         String search = "total gibberiasl;nkajkfbas";
