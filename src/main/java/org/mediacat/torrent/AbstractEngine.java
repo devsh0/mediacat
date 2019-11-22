@@ -44,14 +44,12 @@ abstract public class AbstractEngine implements TorrentEngine {
                 .build();
     }
 
-    private String makeRequest(String url, int triesLeft) throws IOException, InterruptedException, TorrentEngineFailedException {
+    private String makeRequest(String url, int triesLeft) throws IOException, InterruptedException {
         try {
             HttpRequest req = HttpRequest.newBuilder()
                     .header("User-Agent", USER_AGENT)
                     .uri(URI.create(url))
                     .build();
-
-            System.out.println("URL: " + url);
 
             var response = httpClient.send(req, BodyHandlers.ofString(StandardCharsets.UTF_8));
             return response.body();
@@ -61,9 +59,6 @@ abstract public class AbstractEngine implements TorrentEngine {
                     .getMessage()
                     .toLowerCase();
 
-            System.out.println("Inside the catch block");
-            System.out.println(causeMessage);
-
             if (causeMessage.contains("connection reset")) {
                 if (triesLeft > 0) {
                     System.out.println("Retrying...");
@@ -71,11 +66,11 @@ abstract public class AbstractEngine implements TorrentEngine {
                     return "";
                 }
                 else
-                    throw new TorrentEngineFailedException("Couldn't get rid of the connection reset error!");
+                    throw exc;
             }
         }
 
-        throw new TorrentEngineFailedException("Failed sending request");
+        throw new IOException("Request returned unexpected response!");
     }
 
     // Getters
@@ -116,8 +111,7 @@ abstract public class AbstractEngine implements TorrentEngine {
         return isFailing;
     }
 
-    protected Document getDocument (String url) throws
-            IOException, InterruptedException, TorrentEngineFailedException {
+    protected Document getDocument (String url) throws IOException, InterruptedException {
             String body = makeRequest(url, MAX_RETRIES);
             return Jsoup.parse(body);
     }
