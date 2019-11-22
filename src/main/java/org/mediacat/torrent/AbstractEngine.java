@@ -54,19 +54,14 @@ abstract public class AbstractEngine implements TorrentEngine {
             var response = httpClient.send(req, BodyHandlers.ofString(StandardCharsets.UTF_8));
             return response.body();
         } catch(IOException exc) {
-            String causeMessage = exc
-                    .getCause()
-                    .getMessage()
-                    .toLowerCase();
+            String causeMessage = exc.getMessage().toLowerCase();
+            System.out.println("Message: " + causeMessage);
 
             if (causeMessage.contains("connection reset")) {
                 if (triesLeft > 0) {
                     System.out.println("Retrying...");
-                    makeRequest(url, triesLeft - 1);
-                    return "";
+                    return makeRequest(url, triesLeft - 1);
                 }
-                else
-                    throw exc;
             }
         }
 
