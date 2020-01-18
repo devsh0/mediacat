@@ -70,7 +70,7 @@ abstract public class AbstractEngine implements TorrentEngine {
                     .get();
         } catch (IOException ioe) {
             String message = ioe.getMessage().toLowerCase();
-            if (message.contains("connection reset")) {
+            if (message.contains("connection reset") && triesLeft > 0) {
                 return documentHelper(url, triesLeft - 1);
             } else
                 throw ioe;
